@@ -36,6 +36,9 @@ public class WeatherProvider extends ContentProvider {
     static final int LOCATION = 300;
 
     private static final SQLiteQueryBuilder sWeatherByLocationSettingQueryBuilder;
+    /*private static final SQLiteQueryBuilder sWeatherQueryBuilder;
+    private static final SQLiteQueryBuilder sLocationQueryBuilder;
+     part of my solution to Quiz: Implement Weather And Location Queries */
 
     static{
         sWeatherByLocationSettingQueryBuilder = new SQLiteQueryBuilder();
@@ -50,6 +53,20 @@ public class WeatherProvider extends ContentProvider {
                         " = " + WeatherContract.LocationEntry.TABLE_NAME +
                         "." + WeatherContract.LocationEntry._ID);
     }
+
+    /*static {
+        sWeatherQueryBuilder = new SQLiteQueryBuilder();
+        sWeatherQueryBuilder.setTables(
+                WeatherContract.WeatherEntry.TABLE_NAME
+        );
+    }
+
+    static {
+        sLocationQueryBuilder = new SQLiteQueryBuilder();
+        sLocationQueryBuilder.setTables(
+                WeatherContract.LocationEntry.TABLE_NAME
+        );
+    }part of my solution to Quiz: Implement Weather And Location Queries */
 
     //location.location_setting = ?
     private static final String sLocationSettingSelection =
@@ -155,13 +172,14 @@ public class WeatherProvider extends ContentProvider {
         final int match = sUriMatcher.match(uri);
 
         switch (match) {
-            // Student: Uncomment and fill out these two cases
-//            case WEATHER_WITH_LOCATION_AND_DATE:
-//            case WEATHER_WITH_LOCATION:
             case WEATHER:
                 return WeatherContract.WeatherEntry.CONTENT_TYPE;
             case LOCATION:
                 return WeatherContract.LocationEntry.CONTENT_TYPE;
+            case WEATHER_WITH_LOCATION:
+                return WeatherContract.WeatherEntry.CONTENT_TYPE;
+            case WEATHER_WITH_LOCATION_AND_DATE:
+                return WeatherContract.WeatherEntry.CONTENT_ITEM_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -187,12 +205,45 @@ public class WeatherProvider extends ContentProvider {
             }
             // "weather"
             case WEATHER: {
-                retCursor = null;
+                /*retCursor = sWeatherQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+                        projection,
+                        null,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder);
+                         passed the tests but it's different from solution
+                         part of my solution to Quiz: Implement Weather And Location Queries*/
+                retCursor = mOpenHelper.getReadableDatabase().query(
+                        WeatherContract.WeatherEntry.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
                 break;
             }
             // "location"
             case LOCATION: {
-                retCursor = null;
+                /*retCursor = sLocationQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+                        projection,
+                        null,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder);passed the tests but it's different from solution
+                        part of my solution to Quiz: Implement Weather And Location Queries*/
+                retCursor = mOpenHelper.getReadableDatabase().query(
+                        WeatherContract.LocationEntry.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
                 break;
             }
 
