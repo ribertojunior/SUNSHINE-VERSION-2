@@ -36,10 +36,10 @@
     <string name="pref_units_default" >Metric</string>
 
     <!-- Summary for units in metric preferences- [CHAR_LIMIT=NONE] -->
-    <string name="pref_units_metrics_summary">Metric</string>
+    <string name="pref_units_metric">Metric</string>
 
     <!-- Summary for units in metric preferences- [CHAR_LIMIT=NONE] -->
-    <string name="pref_units_imperial_summary">Imperial</string>
+    <string name="pref_units_imperial">Imperial</string>
 
     <string name="pref_lat_key" translatable="false">latitude</string>
 

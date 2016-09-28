@@ -8,10 +8,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
-
 
 public class MainActivity extends ActionBarActivity {
 
@@ -27,7 +23,6 @@ public class MainActivity extends ActionBarActivity {
                     .add(R.id.container, new ForecastFragment())
                     .commit();
         }
-        Log.v(LOG_TAG, "onCreate: ");
 
     }
 
@@ -51,13 +46,12 @@ public class MainActivity extends ActionBarActivity {
             case R.id.action_settings :
                 intent = new Intent(this,SettingsActivity.class);
                 startActivity(intent);
-                //Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_refresh:
 
                 break;
             case R.id.action_map:
-
+                OpenPreferredLocationInMap();
                 break;
             default: return true;
 
@@ -67,40 +61,19 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void OpenPreferredLocationInMap(){
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.v(LOG_TAG, "onStart: ");
 
-    }
+        Uri geoLocation = Uri.parse("geo:0,0?").buildUpon()
+                .appendQueryParameter("q", Utility.getPreferredLocation(this))
+                .build();
 
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        Log.v(LOG_TAG, "onStop: ");
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.v(LOG_TAG, "onPause: ");
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.v(LOG_TAG, "onResume: ");
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.v(LOG_TAG, "onDestroy: ");
-
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(geoLocation);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        } else {
+            Log.d(LOG_TAG, "OpenPreferredLocationInMap: Couldn't call the map. No receiving apps installed!");
+        }
     }
 }
