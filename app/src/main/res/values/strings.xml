@@ -23,8 +23,8 @@
     <!-- Key name for location's name in SharedPreferences- [CHAR_LIMIT=NONE] -->
     <string name="pref_location_name" translatable="false">location_name</string>
 
-    <!-- Default ID for location preferences [CHAR_LIMIT=NONE] -->
-    <string name="pref_location_default" translatable="false">3448636</string>
+    <!-- Default ID for location preferences (São José dos Campos) [CHAR_LIMIT=NONE] -->
+    <string name="pref_location_default" translatable="false">12240-000</string>
 
     <!-- Label for the unit preference [CHAR_LIMIT=30]-->
     <string name="pref_units_label">Temperature Units</string>
