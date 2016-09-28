@@ -52,3 +52,4 @@ captures/
 /src/main/res/mipmap-xxxhdpi/
 /src/main/res/mipmap-xhdpi/
 /src/main/res/mipmap-mdpi/
+/src/main/java/com/example/android/sunshine/app/FetchWeatherTask_backup.java
