@@ -43,17 +43,6 @@ captures/
 
 /projectFilesBackup/
 .gitignore
-src/main/res/drawable-hdpi/
-src/main/res/drawable-mdpi/
-src/main/res/drawable-v21/
-src/main/res/drawable-xhdpi/
-src/main/res/drawable-xxhdpi/
-src/main/res/drawable-xxxhdpi/
-src/main/res/mipmap-hdpi/
-src/main/res/mipmap-mdpi/
-src/main/res/mipmap-xhdpi/
-src/main/res/mipmap-xxhdpi/
-src/main/res/mipmap-xxxhdpi/
 .idea/.name
 .idea/compiler.xml
 .idea/copyright/
@@ -63,16 +52,5 @@ src/main/res/mipmap-xxxhdpi/
 .idea/misc.xml
 .idea/modules.xml
 .idea/runConfigurations.xml
-app/src/main/res/drawable-hdpi/
-app/src/main/res/drawable-mdpi/
-app/src/main/res/drawable-v21/
-app/src/main/res/drawable-xhdpi/
-app/src/main/res/drawable-xxhdpi/
-app/src/main/res/drawable-xxxhdpi/
-app/src/main/res/mipmap-hdpi/
-app/src/main/res/mipmap-mdpi/
-app/src/main/res/mipmap-xhdpi/
-app/src/main/res/mipmap-xxhdpi/
-app/src/main/res/mipmap-xxxhdpi/
 gradle/
 projectFilesBackup/

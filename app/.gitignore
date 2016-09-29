@@ -40,15 +40,3 @@ captures/
 
 # Keystore files
 *.jks
-
-/src/main/res/drawable-mdpi/
-/src/main/res/drawable-v21/
-/src/main/res/drawable-hdpi/
-/src/main/res/drawable-xxhdpi/
-/src/main/res/drawable-xxxhdpi/
-/src/main/res/drawable-xhdpi/
-/src/main/res/mipmap-hdpi/
-/src/main/res/mipmap-xxhdpi/
-/src/main/res/mipmap-xxxhdpi/
-/src/main/res/mipmap-xhdpi/
-/src/main/res/mipmap-mdpi/
