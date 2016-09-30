@@ -18,7 +18,6 @@ package com.example.android.sunshine.app;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -35,12 +34,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-
-import com.example.android.sunshine.app.data.WeatherContract;
-
-import java.util.ArrayList;
+import android.widget.TextView;
 
 import static com.example.android.sunshine.app.ForecastFragment.COL_WEATHER_DATE;
 import static com.example.android.sunshine.app.ForecastFragment.COL_WEATHER_DESC;
@@ -59,6 +53,8 @@ public class DetailActivity extends ActionBarActivity {
                     .add(R.id.container, new DetailFragment())
                     .commit();
         }
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
     }
@@ -94,28 +90,15 @@ public class DetailActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-    }
-
     /**
      * A placeholder fragment containing a simple view.
      */
     public static class DetailFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
         private final String LOG_TAG = DetailFragment.class.getSimpleName();
-        ArrayAdapter<String> mDetailAdapter;
         private static final String FORECAST_SHARE_HASHTAG = "#SunshineApp";
-        Uri mForecastUri;
+        ShareActionProvider mShareActionProvider;
+        String mForecast;
         private static final int LOADER_ID = 15;
         public DetailFragment() {
             setHasOptionsMenu(true);
@@ -126,15 +109,6 @@ public class DetailActivity extends ActionBarActivity {
                                  Bundle savedInstanceState) {
 
             View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
-            Intent intent = getActivity().getIntent();
-            if (intent != null) {
-                mForecastUri = Uri.parse(intent.getDataString());
-            }
-            ArrayList<String> data = new ArrayList<String>();
-            //data.add(mForecastUri);
-            mDetailAdapter = new ArrayAdapter<String>(getActivity(), R.layout.list_item_forecast, R.id.list_item_forecast_textview, data);
-            ListView listView = (ListView) rootView.findViewById(R.id.listview_detail);
-            listView.setAdapter(mDetailAdapter);
             return rootView;
         }
 
@@ -144,10 +118,10 @@ public class DetailActivity extends ActionBarActivity {
 
             MenuItem menuItem = menu.findItem(R.id.action_share);
 
-            ShareActionProvider mShareActionProvider =
+            mShareActionProvider =
                     (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
 
-            if (mShareActionProvider != null) {
+            if (mForecast != null) {
                 mShareActionProvider.setShareIntent(createShareForecastIntent());
             } else {
                 Log.d(LOG_TAG, "Share Action Provider is null");
@@ -159,7 +133,7 @@ public class DetailActivity extends ActionBarActivity {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
             shareIntent.setType("text/plain");
-            shareIntent.putExtra(Intent.EXTRA_TEXT, mForecastUri + " " + FORECAST_SHARE_HASHTAG);
+            shareIntent.putExtra(Intent.EXTRA_TEXT, mForecast + " " + FORECAST_SHARE_HASHTAG);
             return shareIntent;
 
         }
@@ -171,21 +145,31 @@ public class DetailActivity extends ActionBarActivity {
 
         @Override
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-            String sortOrder = WeatherContract.WeatherEntry.COLUMN_DATE + " ASC";
-            return new CursorLoader(getActivity(), mForecastUri, ForecastFragment.getForecastColumns(), null, null, sortOrder);
+            Intent intent = getActivity().getIntent();
+            if (intent == null) {
+                return null;
+            }
+            return new CursorLoader(getActivity(), intent.getData(), ForecastFragment.getForecastColumns(), null, null, null);
         }
 
         @Override
         public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-            ArrayList<String> strings = new ArrayList<String>();
-            strings.add(convertCursorRowToUXFormat(data));
-            mDetailAdapter = new ArrayAdapter<String>(getActivity(), R.layout.list_item_forecast, R.id.list_item_forecast_textview, strings);
+            //ArrayList<String> strings = new ArrayList<String>();
+            //strings.add(convertCursorRowToUXFormat(data));
+            if (!data.moveToFirst()) {return;}
+            TextView textView = (TextView) getView().findViewById(R.id.detail_text);
+            mForecast = convertCursorRowToUXFormat(data);
+            textView.setText(mForecast);
+            if (mShareActionProvider != null){
+                mShareActionProvider.setShareIntent(createShareForecastIntent());
+            }
+
 
         }
 
         @Override
         public void onLoaderReset(Loader<Cursor> loader) {
-            //mDetailAdapter = null;
+
         }
 
         /**
@@ -202,7 +186,7 @@ public class DetailActivity extends ActionBarActivity {
             string.
          */
         private String convertCursorRowToUXFormat(Cursor cursor) {
-            cursor.moveToNext();
+
             String highAndLow = formatHighLows(
                     cursor.getDouble(COL_WEATHER_MAX_TEMP),
                     cursor.getDouble(COL_WEATHER_MIN_TEMP));
