@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="4">
+    android:weightSum="4"
+    android:id="@+id/forecast">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_launcher"
-
+        android:contentDescription=""
         android:id="@+id/list_item_icon"
         android:layout_weight="1"
         />
@@ -22,19 +22,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:id="@+id/list_item_date_textview"
-            android:text="TOMORROW"
             tools:paddingTop="5dp"
             android:paddingBottom="2dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:id="@+id/list_item_forecast_textview"
-            android:text="CLEAR"
-
             android:paddingBottom="5dp"
             android:paddingTop="2dp" />
     </LinearLayout>
@@ -46,17 +41,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:id="@+id/list_item_high_textview"
-            android:text="21°C"
             android:paddingTop="5dp"
             android:paddingBottom="2dp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:id="@+id/list_item_low_textview"
-            android:text="8°C"
             android:paddingBottom="5dp"
             android:paddingTop="2dp" />
     </LinearLayout>

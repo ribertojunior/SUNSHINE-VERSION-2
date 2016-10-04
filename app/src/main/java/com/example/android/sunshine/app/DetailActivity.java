@@ -24,20 +24,22 @@ import android.view.MenuItem;
 
 public class DetailActivity extends ActionBarActivity {
 
+    public static final String DATE_KEY = "date";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         if (savedInstanceState == null) {
+            Bundle args = new Bundle();
+            args.putParcelable(DetailFragment.DETAIL_URI, getIntent().getData());
+            DetailFragment fragment = new DetailFragment();
+            fragment.setArguments(args);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new DetailFragment())
+                    .add(R.id.weather_detail_container, new DetailFragment())
+                    .add(R.id.weather_detail_container, fragment)
                     .commit();
         }
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
     }
 
 

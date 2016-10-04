@@ -2,6 +2,7 @@ package com.example.android.sunshine.app;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,11 +21,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.android.sunshine.app.data.WeatherContract;
+
 import static com.example.android.sunshine.app.ForecastFragment.COL_DEGREES;
 import static com.example.android.sunshine.app.ForecastFragment.COL_HUMIDITY;
 import static com.example.android.sunshine.app.ForecastFragment.COL_PRESSURE;
+import static com.example.android.sunshine.app.ForecastFragment.COL_WEATHER_CONDITION_ID;
 import static com.example.android.sunshine.app.ForecastFragment.COL_WEATHER_DATE;
-import static com.example.android.sunshine.app.ForecastFragment.COL_WEATHER_ID;
 import static com.example.android.sunshine.app.ForecastFragment.COL_WEATHER_MAX_TEMP;
 import static com.example.android.sunshine.app.ForecastFragment.COL_WEATHER_MIN_TEMP;
 import static com.example.android.sunshine.app.ForecastFragment.COL_WIND;
@@ -37,6 +40,9 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     ShareActionProvider mShareActionProvider;
     String mForecast;
     private static final int LOADER_ID = 15;
+    Uri mUri;
+    static final String DETAIL_URI = "URI";
+
     public DetailFragment() {
         setHasOptionsMenu(true);
     }
@@ -44,8 +50,13 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        Bundle args = getArguments();
+        if (args != null) {
+            mUri = args.getParcelable(DetailFragment.DETAIL_URI);
+        }
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
+        ViewHolder viewHolder = new ViewHolder(rootView);
+
         return rootView;
     }
 
@@ -74,6 +85,18 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         return shareIntent;
 
     }
+
+    public void onLocationChanged(String location) {
+
+        Uri uri = mUri;
+        if (null != uri) {
+            long date = WeatherContract.WeatherEntry.getDateFromUri(uri);
+            Uri updatedUri = WeatherContract.WeatherEntry.buildWeatherLocationWithDate(location, date);
+            mUri = updatedUri;
+            getLoaderManager().restartLoader(LOADER_ID, null, this);
+        }
+    }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         getLoaderManager().initLoader(LOADER_ID, null, this);
@@ -82,11 +105,12 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        Intent intent = getActivity().getIntent();
-        if (intent == null) {
-            return null;
+
+        if (mUri != null) {
+                return new CursorLoader(getActivity(), mUri, ForecastFragment.getForecastColumns(), null, null, null);
+
         }
-        return new CursorLoader(getActivity(), intent.getData(), ForecastFragment.getForecastColumns(), null, null, null);
+        return null;
     }
 
     @Override
@@ -96,8 +120,8 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         if (!data.moveToFirst()) {return;}
 
         ViewHolder viewHolder = new ViewHolder(getView());
-        int weatherId = data.getInt(COL_WEATHER_ID);
-        viewHolder.iconView.setImageResource(R.drawable.ic_launcher);
+        int weatherId = data.getInt(COL_WEATHER_CONDITION_ID);
+        viewHolder.iconView.setImageResource(getArtResourceForWeatherCondition(weatherId));
 
         viewHolder.descriptionView.setText(data.getString(ForecastFragment.COL_WEATHER_DESC));
 
@@ -141,6 +165,75 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     public void onLoaderReset(Loader<Cursor> loader) {
 
     }
+    /**
+     * Helper method to provide the icon resource id according to the weather condition id returned
+     * by the OpenWeatherMap call.
+     * @param weatherId from OpenWeatherMap API response
+     * @return resource id for the corresponding icon. -1 if no relation is found.
+     */
+    public static int getIconResourceForWeatherCondition(int weatherId) {
+        // Based on weather code data found at:
+        // http://bugs.openweathermap.org/projects/api/wiki/Weather_Condition_Codes
+        if (weatherId >= 200 && weatherId <= 232) {
+            return R.drawable.ic_storm;
+        } else if (weatherId >= 300 && weatherId <= 321) {
+            return R.drawable.ic_light_rain;
+        } else if (weatherId >= 500 && weatherId <= 504) {
+            return R.drawable.ic_rain;
+        } else if (weatherId == 511) {
+            return R.drawable.ic_snow;
+        } else if (weatherId >= 520 && weatherId <= 531) {
+            return R.drawable.ic_rain;
+        } else if (weatherId >= 600 && weatherId <= 622) {
+            return R.drawable.ic_snow;
+        } else if (weatherId >= 701 && weatherId <= 761) {
+            return R.drawable.ic_fog;
+        } else if (weatherId == 761 || weatherId == 781) {
+            return R.drawable.ic_storm;
+        } else if (weatherId == 800) {
+            return R.drawable.ic_clear;
+        } else if (weatherId == 801) {
+            return R.drawable.ic_light_clouds;
+        } else if (weatherId >= 802 && weatherId <= 804) {
+            return R.drawable.ic_cloudy;
+        }
+        return -1;
+    }
+
+    /**
+     * Helper method to provide the art resource id according to the weather condition id returned
+     * by the OpenWeatherMap call.
+     * @param weatherId from OpenWeatherMap API response
+     * @return resource id for the corresponding image. -1 if no relation is found.
+     */
+    public static int getArtResourceForWeatherCondition(int weatherId) {
+        // Based on weather code data found at:
+        // http://bugs.openweathermap.org/projects/api/wiki/Weather_Condition_Codes
+        if (weatherId >= 200 && weatherId <= 232) {
+            return R.drawable.art_storm;
+        } else if (weatherId >= 300 && weatherId <= 321) {
+            return R.drawable.art_light_rain;
+        } else if (weatherId >= 500 && weatherId <= 504) {
+            return R.drawable.art_rain;
+        } else if (weatherId == 511) {
+            return R.drawable.art_snow;
+        } else if (weatherId >= 520 && weatherId <= 531) {
+            return R.drawable.art_rain;
+        } else if (weatherId >= 600 && weatherId <= 622) {
+            return R.drawable.art_snow;
+        } else if (weatherId >= 701 && weatherId <= 761) {
+            return R.drawable.art_fog;
+        } else if (weatherId == 761 || weatherId == 781) {
+            return R.drawable.art_storm;
+        } else if (weatherId == 800) {
+            return R.drawable.art_clear;
+        } else if (weatherId == 801) {
+            return R.drawable.art_light_clouds;
+        } else if (weatherId >= 802 && weatherId <= 804) {
+            return R.drawable.art_clouds;
+        }
+        return -1;
+    }
 
     /**
      * Cache of the children views for a forecast list item.
@@ -168,5 +261,6 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             pressure = (TextView)  view.findViewById(R.id.list_item_pressure_value_textview);
         }
     }
+
 
 }

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="top"
-    tools:context=".DetailActivity$DetailFragment"
+    tools:context=".DetailFragment"
     android:padding="20dp">
 
     <ScrollView
@@ -85,7 +85,6 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_launcher"
                         android:id="@+id/list_item_icon"
                         />
                     <TextView
@@ -103,11 +102,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/list_item_hum_textview"
-                    android:text="@string/humidity"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:paddingLeft="2dp"
                     android:paddingStart="2dp"
                     android:id="@+id/list_item_hum_value_textview"
@@ -120,11 +114,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/list_item_wind_textview"
-                    android:text="@string/wind"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/list_item_wind_desc_textview"
                     android:paddingLeft="2dp"
                     />
@@ -132,11 +121,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/list_item_pressure_textview"
-                    android:text="@string/pressure"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
