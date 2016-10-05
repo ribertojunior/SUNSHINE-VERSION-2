@@ -25,6 +25,8 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     private final String LOG_TAG = ForecastFragment.class.getSimpleName();
     private ForecastAdapter mForecastAdapter;
     private static final int LOADER_ID = 14;
+    private int mPos = ListView.INVALID_POSITION;
+    public static final String SELECTED_KEY = "position";
 
     private static final String[] FORECAST_COLUMNS = {
             // In this case the id needs to be fully qualified with a table name, since
@@ -63,6 +65,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     static final int COL_WIND = 10;
     static final int COL_DEGREES = 11;
     static final int COL_PRESSURE = 12;
+    private boolean mUseTodayLayout;
 
 
     public ForecastFragment() {
@@ -78,15 +81,25 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         getLoaderManager().restartLoader(LOADER_ID, null, this);
     }
 
+    public void setUseTodayLayout(boolean useTodayLayout) {
+        mUseTodayLayout = useTodayLayout;
+        if (mForecastAdapter != null) {
+            mForecastAdapter.setUseTodayLayout(mUseTodayLayout);
+        }
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-
+        if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_KEY)) {
+            mPos = savedInstanceState.getInt(SELECTED_KEY);
+        }
 
         mForecastAdapter = new ForecastAdapter(getActivity(), null, 0);
+        mForecastAdapter.setUseTodayLayout(mUseTodayLayout);
         ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
         listView.setAdapter(mForecastAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -95,6 +108,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
             public void onItemClick(AdapterView adapterView, View view, int position, long l) {
                 // CursorAdapter returns a cursor at the correct position for getItem(), or null
                 // if it cannot seek to that position.
+                mPos = position;
                 Cursor cursor = (Cursor) adapterView.getItemAtPosition(position);
                 if (cursor != null) {
                     String locationSetting = Utility.getPreferredLocation(getActivity());
@@ -110,6 +124,13 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         return rootView;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if (mPos != ListView.INVALID_POSITION) {
+            outState.putInt(SELECTED_KEY, mPos);
+        }
+        super.onSaveInstanceState(outState);
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -158,6 +179,12 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mForecastAdapter.swapCursor(data);
+
+        ListView listView  = (ListView) getView().findViewById(R.id.listview_forecast);
+        if (mPos != ListView.INVALID_POSITION) {
+            listView.smoothScrollToPosition(mPos);
+
+        }
     }
 
     @Override

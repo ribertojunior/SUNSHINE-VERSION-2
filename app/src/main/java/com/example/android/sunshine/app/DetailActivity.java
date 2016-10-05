@@ -36,7 +36,6 @@ public class DetailActivity extends ActionBarActivity {
             DetailFragment fragment = new DetailFragment();
             fragment.setArguments(args);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.weather_detail_container, new DetailFragment())
                     .add(R.id.weather_detail_container, fragment)
                     .commit();
         }

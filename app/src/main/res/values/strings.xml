@@ -56,7 +56,7 @@
 
     <!-- Strings for formatting weather-related data -->
     <!-- Temperature format [CHAR LIMIT=5] -->
-    <string name="format_temperature"><xliff:g id="temp">%1.0f</xliff:g>\u00B0<xliff:g id="unit">%2$s</xliff:g></string>
+    <string name="format_temperature"><xliff:g id="temp">%1.0f</xliff:g>\u00B0</string>
 
     <!-- Windspeed formats -->
     <!-- Wind in mph [CHAR LIMIT=25] -->
@@ -74,6 +74,7 @@
 
     <!-- Humidity format CHAR LIMIT=25]-->
     <string name="format_humidity">Humidity: <xliff:g id="humidity">%1.0f</xliff:g> %%</string>
+    <string name="weather_condition_illustration">Weather condition illustration.</string>
 
 
 </resources>

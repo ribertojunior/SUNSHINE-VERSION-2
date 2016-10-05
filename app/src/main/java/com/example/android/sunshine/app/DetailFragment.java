@@ -11,7 +11,6 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.ShareActionProvider;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -54,7 +53,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         if (args != null) {
             mUri = args.getParcelable(DetailFragment.DETAIL_URI);
         }
-        View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
+        View rootView = inflater.inflate(R.layout.main, container, false);
         ViewHolder viewHolder = new ViewHolder(rootView);
 
         return rootView;
@@ -71,8 +70,6 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
         if (mForecast != null) {
             mShareActionProvider.setShareIntent(createShareForecastIntent());
-        } else {
-            Log.d(LOG_TAG, "Share Action Provider is null");
         }
 
     }
@@ -87,7 +84,6 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     }
 
     public void onLocationChanged(String location) {
-
         Uri uri = mUri;
         if (null != uri) {
             long date = WeatherContract.WeatherEntry.getDateFromUri(uri);
@@ -105,7 +101,6 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-
         if (mUri != null) {
                 return new CursorLoader(getActivity(), mUri, ForecastFragment.getForecastColumns(), null, null, null);
 

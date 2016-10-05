@@ -38,8 +38,11 @@ public class MainActivity extends ActionBarActivity implements ForecastFragment.
             }
         } else {
             mTwoPane = false;
+            //getSupportActionBar().setElevation(0f);
         }
-
+        ForecastFragment forecastFragment = ((ForecastFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.fragment_forecast));
+        forecastFragment.setUseTodayLayout(!mTwoPane);
     }
 
     @Override
@@ -119,7 +122,7 @@ public class MainActivity extends ActionBarActivity implements ForecastFragment.
             detailFragment.setArguments(args);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.weather_detail_container, detailFragment);
-             ft.commit();
+            ft.commit();
         } else {
              Intent intent = new Intent(this, DetailActivity.class).setData(dateUri);
              startActivity(intent);

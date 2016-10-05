@@ -1,139 +1,100 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="top"
-    tools:context=".DetailFragment"
-    android:padding="20dp">
+    android:layout_height="match_parent"  >
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/list_item_date_friendly_textview"
+            android:textSize="24sp"
+            android:fontFamily="sans-serif-condensed"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/list_item_date_textview"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-condensed"
+            android:textColor="#646464"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="16dp">
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_weight="1">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/list_item_date_friendly_textview"
-                    tools:paddingTop="5dp"
-                    android:paddingBottom="2dp" />
-
-            </LinearLayout>
-            <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/list_item_date_textview"
-                    tools:paddingTop="5dp"
-                    android:paddingBottom="2dp"
-                    />
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_weight="1"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp">
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/list_item_high_textview"
-
-                        android:paddingTop="5dp"
-                        android:paddingBottom="2dp"
-                        android:textSize="24sp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/list_item_low_textview"
-
-                        android:paddingBottom="5dp"
-                        android:paddingTop="2dp"
-                        android:textSize="18sp" />
-                </LinearLayout>
-                <LinearLayout
+                android:gravity="center_horizontal"
+                >
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center_horizontal"
-                    android:paddingEnd="8dp"
-                    android:paddingRight="8dp">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/list_item_icon"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/list_item_forecast_textview"
-                        />
-                </LinearLayout>
+                    android:id="@+id/list_item_high_textview"
+                    android:textSize="96sp"
+                    android:fontFamily="sans-serif-light"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/list_item_low_textview"
+                    android:textSize="48sp"
+                    android:fontFamily="sans-serif-light"
+                    android:textColor="#646464"/>
             </LinearLayout>
-
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingBottom="8dp">
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:paddingTop="16dp">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/list_item_icon"
+                    />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="2dp"
-                    android:paddingStart="2dp"
-                    android:id="@+id/list_item_hum_value_textview"
+                    android:id="@+id/list_item_forecast_textview"
+                    android:textSize="22sp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textColor="#646464"
                     />
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="8dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/list_item_wind_desc_textview"
-                    android:paddingLeft="2dp"
-                    />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="2dp"
-                    android:id="@+id/list_item_pressure_value_textview"
-                    />
-            </LinearLayout>
-
         </LinearLayout>
-    </ScrollView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/list_item_hum_value_textview"
+            android:textSize="22sp"
+            android:fontFamily="sans-serif-light"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/list_item_wind_desc_textview"
+            android:textSize="22sp"
+            android:fontFamily="sans-serif-light"
+            android:paddingTop="4dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/list_item_pressure_value_textview"
+            android:textSize="22sp"
+            android:fontFamily="sans-serif-light"
+            android:paddingTop="4dp"
+            />
 
 
-
-
-
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>

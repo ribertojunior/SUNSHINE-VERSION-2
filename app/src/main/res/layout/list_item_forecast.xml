@@ -1,37 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="4"
-    android:id="@+id/forecast">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription=""
-        android:id="@+id/list_item_icon"
-        android:layout_weight="1"
-        />
+    android:orientation="horizontal"
+    android:layout_width="360dp"
+    android:layout_height="wrap_content"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:id="@+id/forecast"
+    android:gravity="center_vertical"
+    android:background="@drawable/touch_selector"
+    android:padding="16dp"    >
+
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/weather_condition_illustration"
+            android:id="@+id/list_item_icon"
+
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_weight="2">
+        android:layout_weight="4"
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/list_item_date_textview"
-            tools:paddingTop="5dp"
-            android:paddingBottom="2dp" />
+            android:textSize="22sp"
+            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/list_item_forecast_textview"
-            android:paddingBottom="5dp"
-            android:paddingTop="2dp" />
+            android:textSize="14sp"
+            />
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -42,14 +54,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/list_item_high_textview"
-            android:paddingTop="5dp"
-            android:paddingBottom="2dp" />
+            android:textSize="22sp"
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/list_item_low_textview"
-            android:paddingBottom="5dp"
-            android:paddingTop="2dp" />
+            android:textSize="14sp"
+            />
     </LinearLayout>
 
 </LinearLayout>
