@@ -17,7 +17,15 @@
         android:orientation="vertical"
 
         android:layout_weight="1">
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/city_name_text_view"
+            android:fontFamily="sans-serif-condensed"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            android:background="@color/sunshine_blue"
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,6 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/list_item_icon"
+            android:contentDescription="@string/weather_condition_illustration"
             android:maxHeight="100dp"
             android:maxWidth="100dp"
             />

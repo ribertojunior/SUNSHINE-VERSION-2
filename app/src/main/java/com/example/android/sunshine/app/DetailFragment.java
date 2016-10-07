@@ -2,6 +2,8 @@ package com.example.android.sunshine.app;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,6 +24,7 @@ import android.widget.TextView;
 
 import com.example.android.sunshine.app.data.WeatherContract;
 
+import static com.example.android.sunshine.app.ForecastFragment.COL_CITY_NAME;
 import static com.example.android.sunshine.app.ForecastFragment.COL_DEGREES;
 import static com.example.android.sunshine.app.ForecastFragment.COL_HUMIDITY;
 import static com.example.android.sunshine.app.ForecastFragment.COL_PRESSURE;
@@ -125,6 +128,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         String dateText = Utility.getFormattedMonthDay(getActivity(), date);
         viewHolder.dateFriendly.setText(friendlyDateText);
         viewHolder.dateView.setText(dateText);
+        viewHolder.cityView.setText(data.getString(COL_CITY_NAME));
 
         viewHolder.highTempView.setText(Utility.formatTemperature(
                 getActivity(),
@@ -140,6 +144,18 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
         viewHolder.wind.setText(
                 Utility.getFormattedWind(getActivity(), data.getFloat(COL_WIND), data.getFloat(COL_DEGREES)) );
+
+
+
+        if (viewHolder.agulha!=null) {
+            BitmapFactory.Options o = Utility.getSize(getActivity(), R.drawable.agulha);
+            Matrix matrix = new Matrix();
+            matrix.postRotate((float) 90, o.outWidth/2, o.outHeight/2);
+            viewHolder.agulha.setScaleType(ImageView.ScaleType.MATRIX);   //required
+            viewHolder.agulha.setImageMatrix(matrix);
+        }
+
+
 
 
         viewHolder.pressure.setText(
@@ -235,6 +251,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
      */
     public static class ViewHolder {
         public final ImageView iconView;
+        public final TextView cityView;
         public final TextView dateView;
         public final TextView dateFriendly;
         public final TextView descriptionView;
@@ -243,9 +260,12 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         public final TextView humidity;
         public final TextView wind;
         public final TextView pressure;
+        public final WindCompass compass;
+        public final ImageView agulha;
 
         public ViewHolder(View view) {
             iconView = (ImageView) view.findViewById(R.id.list_item_icon);
+            cityView = (TextView) view.findViewById(R.id.city_name_text_view);
             dateView = (TextView) view.findViewById(R.id.list_item_date_textview);
             dateFriendly = (TextView) view.findViewById(R.id.list_item_date_friendly_textview);
             descriptionView = (TextView) view.findViewById(R.id.list_item_forecast_textview);
@@ -254,6 +274,9 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             humidity = (TextView) view.findViewById(R.id.list_item_hum_value_textview);
             wind = (TextView) view.findViewById(R.id.list_item_wind_desc_textview);
             pressure = (TextView)  view.findViewById(R.id.list_item_pressure_value_textview);
+            compass = (WindCompass) view.findViewById(R.id.compass);
+            agulha = (ImageView) view.findViewById(R.id.agulha);
+
         }
     }
 

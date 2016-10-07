@@ -178,6 +178,7 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
                 double windSpeed;
                 double windDirection;
 
+
                 double high;
                 double low;
 

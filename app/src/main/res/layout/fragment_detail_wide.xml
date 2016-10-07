@@ -17,6 +17,12 @@
 
             <!-- Header: Day, Date -->
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/city_name_text_view"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="16sp"/>
+            <TextView
                 android:id="@+id/list_item_date_friendly_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

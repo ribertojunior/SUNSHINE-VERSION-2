@@ -3,8 +3,11 @@ package com.example.android.sunshine.app;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -48,6 +51,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
             WeatherContract.WeatherEntry.COLUMN_WIND_SPEED,
             WeatherContract.WeatherEntry.COLUMN_DEGREES,
             WeatherContract.WeatherEntry.COLUMN_PRESSURE,
+            WeatherContract.LocationEntry.COLUMN_CITY_NAME
     };
 
     // These indices are tied to FORECAST_COLUMNS.  If FORECAST_COLUMNS changes, these
@@ -65,6 +69,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     static final int COL_WIND = 10;
     static final int COL_DEGREES = 11;
     static final int COL_PRESSURE = 12;
+    static final int COL_CITY_NAME = 13;
     private boolean mUseTodayLayout;
 
 
@@ -120,6 +125,8 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
             }
         });
 
+        listView.setSelection(0);
+
 
         return rootView;
     }
@@ -137,6 +144,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -183,6 +191,36 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         ListView listView  = (ListView) getView().findViewById(R.id.listview_forecast);
         if (mPos != ListView.INVALID_POSITION) {
             listView.smoothScrollToPosition(mPos);
+
+        } else if(data.getPosition()==0){
+            if (getActivity().findViewById(R.id.weather_detail_container) != null) {
+
+                String  s = Utility.formatDate(data.getLong(COL_WEATHER_DATE));
+                final int WHAT = 1;
+                final Cursor c = data;
+                Handler handler = new Handler(){
+                    @Override
+                    public void handleMessage(Message msg) {
+                        if(msg.what == WHAT) {
+                            c.moveToFirst();
+                            String locationSetting = Utility.getPreferredLocation(getActivity());
+                            Bundle args = new Bundle();
+                            args.putParcelable(DetailFragment.DETAIL_URI, WeatherContract.WeatherEntry
+                                    .buildWeatherLocationWithDate(locationSetting,
+                                            c.getLong(COL_WEATHER_DATE)));
+                            DetailFragment detailFragment = new DetailFragment();
+                            detailFragment.setArguments(args);
+                            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                            ft.replace(R.id.weather_detail_container, detailFragment);
+                            ft.commit();
+                        }
+                    }
+                };
+                handler.sendEmptyMessage(WHAT);
+
+                listView.setItemChecked(0, true);
+            }
+
 
         }
     }
