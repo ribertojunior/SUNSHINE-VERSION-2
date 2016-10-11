@@ -1,5 +1,9 @@
 package com.example.android.sunshine.app;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,6 +25,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.android.sunshine.app.data.WeatherContract;
+import com.example.android.sunshine.app.service.SunshineService;
 
 
 public class ForecastFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -77,8 +82,16 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
     private void updateWeather(){
-        FetchWeatherTask task = new FetchWeatherTask(getActivity());
-        task.execute(Utility.getPreferredLocation(getActivity()));
+        Intent intent = new Intent(getActivity(), SunshineService.AlarmReceiver.class);
+        intent.putExtra(SunshineService.LOCATION_QUERY_EXTRA,
+                Utility.getPreferredLocation(getActivity()));
+        //getActivity().startService(intent);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(),0,intent, PendingIntent.FLAG_ONE_SHOT);
+        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 5000, pendingIntent);
+        //Log.v(LOG_TAG, "updateWeather: Alarm set!");
+
+
     }
 
     public void onLocationChanged() {
