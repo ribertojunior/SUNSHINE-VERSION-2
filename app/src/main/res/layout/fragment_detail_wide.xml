@@ -85,6 +85,26 @@
                 android:textSize="22sp"
                 android:fontFamily="sans-serif-light"
                 android:paddingTop="4dp"/>
+            <com.example.android.sunshine.app.WindCompass
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/compass"
+                android:contentDescription="@string/compass_view"
+                >
+
+                <ImageView
+                    android:background="@drawable/compass"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp" />
+
+                <ImageView
+                    android:id="@+id/agulha"
+                    android:background="@drawable/agulha"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    />
+
+            </com.example.android.sunshine.app.WindCompass>
         </LinearLayout>
 
         <LinearLayout

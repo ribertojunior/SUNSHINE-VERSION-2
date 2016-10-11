@@ -75,6 +75,8 @@
     <!-- Humidity format CHAR LIMIT=25]-->
     <string name="format_humidity">Humidity: <xliff:g id="humidity">%1.0f</xliff:g> %%</string>
     <string name="weather_condition_illustration">Weather condition illustration.</string>
+    <string name="compass_view">Compass showing the wind direction.</string>
+    <string name="compass_accessibility">Wind speed direction has changed.</string>
 
 
 </resources>

@@ -9,6 +9,8 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.accessibility.AccessibilityEvent;
+import android.view.accessibility.AccessibilityManager;
 import android.widget.RemoteViews;
 
 import static android.R.attr.bottom;
@@ -54,7 +56,20 @@ public class WindCompass extends ViewGroup {
     }
 
     @Override
+    public boolean dispatchPopulateAccessibilityEvent(AccessibilityEvent event) {
+        event.getText().add(getContext().getString(R.string.compass_accessibility));
+        return super.dispatchPopulateAccessibilityEvent(event);
+    }
+
+    @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        AccessibilityManager accessibilityManager =
+                (AccessibilityManager) getContext().getSystemService(
+                        Context.ACCESSIBILITY_SERVICE);
+        if (accessibilityManager.isEnabled()) {
+            sendAccessibilityEvent(
+                    AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED);
+        }
         final int count = getChildCount();
 
         // These are the far left and right edges in which we are performing layout.

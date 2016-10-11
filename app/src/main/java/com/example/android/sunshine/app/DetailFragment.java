@@ -2,8 +2,6 @@ package com.example.android.sunshine.app;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -148,11 +147,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
 
         if (viewHolder.agulha!=null) {
-            BitmapFactory.Options o = Utility.getSize(getActivity(), R.drawable.agulha);
-            Matrix matrix = new Matrix();
-            matrix.postRotate((float) 90, o.outWidth/2, o.outHeight/2);
-            viewHolder.agulha.setScaleType(ImageView.ScaleType.MATRIX);   //required
-            viewHolder.agulha.setImageMatrix(matrix);
+            viewHolder.agulha.startAnimation(rotate(data.getFloat(COL_DEGREES)+360));
         }
 
 
@@ -170,6 +165,15 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         }
 
 
+    }
+    private RotateAnimation rotate(float degree) {
+        final RotateAnimation rotateAnim = new RotateAnimation(0.0f, degree,
+                RotateAnimation.RELATIVE_TO_SELF, 0.5f,
+                RotateAnimation.RELATIVE_TO_SELF, 0.5f);
+
+        rotateAnim.setDuration(1000);
+        rotateAnim.setFillAfter(true);
+        return rotateAnim;
     }
 
     @Override
