@@ -147,7 +147,9 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
 
         if (viewHolder.agulha!=null) {
-            viewHolder.agulha.startAnimation(rotate(data.getFloat(COL_DEGREES)+360));
+            float degrees = data.getFloat(COL_DEGREES)+360;
+            viewHolder.compass.setDegrees(data.getFloat(COL_DEGREES)+360);
+            viewHolder.agulha.startAnimation(rotate(degrees));
         }
 
 

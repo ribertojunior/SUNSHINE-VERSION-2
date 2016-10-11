@@ -105,6 +105,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
 
         mForecastAdapter = new ForecastAdapter(getActivity(), null, 0);
         mForecastAdapter.setUseTodayLayout(mUseTodayLayout);
+
         ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
         listView.setAdapter(mForecastAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -125,7 +126,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
             }
         });
 
-        listView.setSelection(0);
+        listView.setItemChecked(0, true);
 
 
         return rootView;

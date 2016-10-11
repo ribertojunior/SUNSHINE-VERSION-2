@@ -6,11 +6,15 @@ import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.GestureDetector;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
+import android.view.animation.RotateAnimation;
+import android.widget.ImageView;
 import android.widget.RemoteViews;
 
 import static android.R.attr.bottom;
@@ -22,6 +26,7 @@ import static android.R.attr.top;
 @RemoteViews.RemoteView
 public class WindCompass extends ViewGroup {
 
+    private float mDegrees;
 
     /** The amount of space used by children in the left gutter. */
     private int mLeftWidth;
@@ -32,6 +37,7 @@ public class WindCompass extends ViewGroup {
     /** These are used for computing child frames based on their gravity. */
     private final Rect mTmpContainerRect = new Rect();
     private final Rect mTmpChildRect = new Rect();
+    private GestureDetector mDetector;
 
     public WindCompass(Context context) {
         super(context);
@@ -70,6 +76,7 @@ public class WindCompass extends ViewGroup {
             sendAccessibilityEvent(
                     AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED);
         }
+        mDetector = new GestureDetector(getContext(), new mListener());
         final int count = getChildCount();
 
         // These are the far left and right edges in which we are performing layout.
@@ -144,6 +151,13 @@ public class WindCompass extends ViewGroup {
         return p instanceof LayoutParams;
     }
 
+    public float getDegrees() {
+        return mDegrees;
+    }
+
+    public void setDegrees(float degrees) {
+        this.mDegrees = degrees;
+    }
 
     /**
      * Ask all children to measure themselves and compute the measurement of this
@@ -204,6 +218,32 @@ public class WindCompass extends ViewGroup {
                 resolveSizeAndState(maxHeight, heightMeasureSpec,
                         childState << MEASURED_HEIGHT_STATE_SHIFT));
     }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        boolean result = mDetector.onTouchEvent(event);
+        if (result) {
+            ImageView agulha = (ImageView) getChildAt(1);
+            if (agulha!=null) {
+                final RotateAnimation rotateAnim = new RotateAnimation(mDegrees-360, mDegrees,
+                        RotateAnimation.RELATIVE_TO_SELF, 0.5f,
+                        RotateAnimation.RELATIVE_TO_SELF, 0.5f);
+
+                rotateAnim.setDuration(1500);
+                rotateAnim.setFillAfter(true);
+                agulha.startAnimation(rotateAnim);
+            }
+        }
+        return result;
+    }
+    class mListener extends GestureDetector.SimpleOnGestureListener {
+        @Override
+        public boolean onDown(MotionEvent e) {
+            return true;
+        }
+    }
+
+
     /**
      * Custom per-child layout information.
      */
