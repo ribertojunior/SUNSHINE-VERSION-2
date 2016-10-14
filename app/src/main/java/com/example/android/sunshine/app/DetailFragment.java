@@ -125,6 +125,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         String dateText = Utility.getFormattedMonthDay(getActivity(), date);
         viewHolder.dateFriendly.setText(friendlyDateText);
         viewHolder.dateView.setText(dateText);
+
         viewHolder.cityView.setText(data.getString(COL_CITY_NAME));
 
         viewHolder.highTempView.setText(Utility.formatTemperature(

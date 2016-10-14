@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -71,11 +70,8 @@ public class MainActivity extends ActionBarActivity implements ForecastFragment.
                 Intent intent = new Intent(this,SettingsActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.action_refresh:
-
-                break;
             case R.id.action_map:
-                OpenPreferredLocationInMap();
+
                 break;
             default: return true;
 
@@ -102,21 +98,7 @@ public class MainActivity extends ActionBarActivity implements ForecastFragment.
         }
     }
 
-    private void OpenPreferredLocationInMap(){
 
-
-        Uri geoLocation = Uri.parse("geo:0,0?").buildUpon()
-                .appendQueryParameter("q", Utility.getPreferredLocation(this))
-                .build();
-
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(geoLocation);
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(intent);
-        } else {
-            Log.d(LOG_TAG, "OpenPreferredLocationInMap: Couldn't call the map. No receiving apps installed!");
-        }
-    }
 
     @Override
     public void onItemSelected(Uri dateUri) {

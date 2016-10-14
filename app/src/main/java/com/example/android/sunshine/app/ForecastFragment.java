@@ -1,5 +1,6 @@
 package com.example.android.sunshine.app;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,6 +33,9 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     private static final int LOADER_ID = 14;
     private int mPos = ListView.INVALID_POSITION;
     public static final String SELECTED_KEY = "position";
+    private double mLat;
+    private double mLong;
+
 
     private static final String[] FORECAST_COLUMNS = {
             // In this case the id needs to be fully qualified with a table name, since
@@ -161,11 +166,12 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.action_refresh:
-                updateWeather();
+            case R.id.action_map:
+                OpenPreferredLocationInMap();
                 break;
-
             default: return true;
+
+
 
         }
 
@@ -193,7 +199,10 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mForecastAdapter.swapCursor(data);
-
+        if (data.moveToNext()) {
+            mLat = data.getDouble(COL_COORD_LAT);
+            mLong = data.getDouble(COL_COORD_LONG);
+        }
         ListView listView  = (ListView) getView().findViewById(R.id.listview_forecast);
         if (mPos != ListView.INVALID_POSITION) {
             listView.smoothScrollToPosition(mPos);
@@ -239,6 +248,20 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
 
     public static String[] getForecastColumns() {
         return FORECAST_COLUMNS;
+    }
+
+    private void OpenPreferredLocationInMap(){
+
+
+        Uri geoLocation = Uri.parse("geo:"+mLat+","+mLong+"?z=11");
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(geoLocation);
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivity(intent);
+        } else {
+            Log.d(LOG_TAG, "OpenPreferredLocationInMap: Couldn't call the map. No receiving apps installed!");
+        }
     }
 
 
