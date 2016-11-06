@@ -44,6 +44,8 @@
 
     <string name="pref_lon_key" translatable="false">longitude</string>
 
+    <string name="pref_location_status_key">locationStatus</string>
+
     <!-- Date label when displaying today's weather forecast [CHAR LIMIT=20] -->
     <string name="today">Today</string>
 
@@ -57,7 +59,7 @@
     <!-- Temperature format [CHAR LIMIT=5] -->
     <string name="format_temperature"><xliff:g id="temp">%1.0f</xliff:g>\u00B0</string>
 
-    <!-- Windspeed formats -->
+    <!-- Wind speed formats -->
     <!-- Wind in mph [CHAR LIMIT=25] -->
     <string name="format_wind_mph">
         Wind: <xliff:g id="speed">%1$1.0f</xliff:g> mph <xliff:g id="direction">%2$s</xliff:g>
@@ -92,5 +94,13 @@
     <string name="pref_notification_title">Notifications</string>
     <string name="pref_notification_on">Enable</string>
     <string name="pref_notification_off">Disable</string>
+
+    <!-- Sever and network error strings -->
+    <string name="empty_string">No Weather Information Available</string>
+    <string name="network_error">No Weather Information Available. No Internet Connectivity</string>
+    <string name="empty_forecast_list_server_down">No Weather Information Available. The Server Is Not Returning Data.</string>
+    <string name="empty_forecast_list_server_error">No Weather Information Available. The Server Is Not Returning Valid Data.</string>
+    <string name="empty_forecast_list_server_unknown">No Weather Information Available Due A Unknown Error.</string>
+    <string name="empty_forecast_list_invalid_location">No weather information available. The location in settings is not recognized by the weather server.</string>
 
 </resources>

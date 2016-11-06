@@ -1,11 +1,13 @@
 package com.example.android.sunshine.app;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -21,12 +23,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.android.sunshine.app.data.WeatherContract;
 import com.example.android.sunshine.app.sync.SunshineSyncAdapter;
 
+import static com.example.android.sunshine.app.Utility.isOnline;
 
-public class ForecastFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+
+public class ForecastFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, SharedPreferences.OnSharedPreferenceChangeListener  {
 
     private final String LOG_TAG = ForecastFragment.class.getSimpleName();
     private ForecastAdapter mForecastAdapter;
@@ -35,6 +40,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     public static final String SELECTED_KEY = "position";
     private double mLat;
     private double mLong;
+    private static final int OFFLINE = 54;
 
 
     private static final String[] FORECAST_COLUMNS = {
@@ -103,6 +109,12 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         }
     }
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals(getString(R.string.pref_location_status_key))) {
+            updateEmptyView();
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -115,10 +127,11 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
 
         mForecastAdapter = new ForecastAdapter(getActivity(), null, 0);
         mForecastAdapter.setUseTodayLayout(mUseTodayLayout);
+        ViewHolder viewHolder = new ViewHolder(rootView);
 
-        ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
-        listView.setAdapter(mForecastAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        viewHolder.mListView.setEmptyView(viewHolder.mEmptyView);
+        viewHolder.mListView.setAdapter(mForecastAdapter);
+        viewHolder.mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView adapterView, View view, int position, long l) {
@@ -136,10 +149,24 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
             }
         });
 
-        listView.setItemChecked(0, true);
-
-
+        viewHolder.mListView.setItemChecked(0, true);
+        SunshineSyncAdapter.syncImmediately(getActivity());
+        rootView.setTag(viewHolder);
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
+        super.onPause();
     }
 
     @Override
@@ -202,41 +229,43 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         if (data.moveToNext()) {
             mLat = data.getDouble(COL_COORD_LAT);
             mLong = data.getDouble(COL_COORD_LONG);
-        }
-        ListView listView  = (ListView) getView().findViewById(R.id.listview_forecast);
-        if (mPos != ListView.INVALID_POSITION) {
-            listView.smoothScrollToPosition(mPos);
+            ViewHolder viewHolder = (ViewHolder) getView().getTag();
+            //ListView listView  = (ListView) getView().findViewById(R.id.listview_forecast);
+            if (mPos != ListView.INVALID_POSITION) {
+                viewHolder.mListView.smoothScrollToPosition(mPos);
 
-        } else if(data.getPosition()==0){
-            if (getActivity().findViewById(R.id.weather_detail_container) != null) {
+            } else if(data.getPosition()==0) {
+                if (getActivity().findViewById(R.id.weather_detail_container) != null) {
 
-                String  s = Utility.formatDate(data.getLong(COL_WEATHER_DATE));
-                final int WHAT = 1;
-                final Cursor c = data;
-                Handler handler = new Handler(){
-                    @Override
-                    public void handleMessage(Message msg) {
-                        if(msg.what == WHAT) {
-                            c.moveToFirst();
-                            String locationSetting = Utility.getPreferredLocation(getActivity());
-                            Bundle args = new Bundle();
-                            args.putParcelable(DetailFragment.DETAIL_URI, WeatherContract.WeatherEntry
-                                    .buildWeatherLocationWithDate(locationSetting,
-                                            c.getLong(COL_WEATHER_DATE)));
-                            DetailFragment detailFragment = new DetailFragment();
-                            detailFragment.setArguments(args);
-                            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                            ft.replace(R.id.weather_detail_container, detailFragment);
-                            ft.commit();
+                    final int WHAT = 1;
+                    final Cursor c = data;
+                    Handler handler = new Handler() {
+                        @Override
+                        public void handleMessage(Message msg) {
+                            if (msg.what == WHAT) {
+                                c.moveToFirst();
+                                String locationSetting = Utility.getPreferredLocation(getActivity());
+                                Bundle args = new Bundle();
+                                args.putParcelable(DetailFragment.DETAIL_URI,
+                                        WeatherContract.WeatherEntry
+                                                .buildWeatherLocationWithDate(locationSetting,
+                                                        c.getLong(COL_WEATHER_DATE)));
+                                DetailFragment detailFragment = new DetailFragment();
+                                detailFragment.setArguments(args);
+                                FragmentTransaction ft = getActivity()
+                                        .getSupportFragmentManager().beginTransaction();
+                                ft.replace(R.id.weather_detail_container, detailFragment);
+                                ft.commit();
+                            }
                         }
-                    }
-                };
-                handler.sendEmptyMessage(WHAT);
+                    };
+                    handler.sendEmptyMessage(WHAT);
 
-                listView.setItemChecked(0, true);
+                    viewHolder.mListView.setItemChecked(0, true);
+                }
             }
-
-
+        } else {
+            updateEmptyView();
         }
     }
 
@@ -264,6 +293,49 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         }
     }
 
+    private void updateEmptyView(){
+        if (mForecastAdapter.getCount() == 0) {
+            ViewHolder viewHolder = (ViewHolder) getView().getTag();
+            if (viewHolder.mEmptyView != null) {
+                String text = "";
+                @SunshineSyncAdapter.LocationStatus int status = Utility.getLocationStatus(getActivity());
+                switch (status) {
+                    case SunshineSyncAdapter.LOCATION_STATUS_OK : {
+                        text = "";
+                        break;
+                    }
+                    case SunshineSyncAdapter.LOCATION_STATUS_SERVER_DOWN:{
+                        text = getString(R.string.empty_forecast_list_server_down);
+                        break;
+                    }
+                    case SunshineSyncAdapter.LOCATION_STATUS_SERVER_INVALID: {
+                        text = getString(R.string.empty_forecast_list_server_error);
+                        break;
+                    }
+                    case SunshineSyncAdapter.LOCATION_STATUS_UNKNOWN: {
+                        text = getString(R.string.empty_forecast_list_server_unknown);
+                        break;
+                    }
+                    case SunshineSyncAdapter.LOCATION_STATUS_INVALID:{
+                        text = getString(R.string.empty_forecast_list_invalid_location);
+                        break;
+                    }
+                    default: {
+                        if (!isOnline(getActivity())) {
+                            text = getString(R.string.network_error);
+                        }
+                        break;
+                    }
+                }
+
+                //((TextView)getView().findViewById(R.id.empty_view)).setText(text);
+                viewHolder.mEmptyView.setText(text);
+            }
+        }
+    }
+
+
+
 
     /**
      * A callback interface that all activities containing this fragment must
@@ -275,5 +347,14 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
          * DetailFragmentCallback for when an item has been selected.
          */
         public void onItemSelected(Uri dateUri);
+    }
+
+    static class ViewHolder {
+        final ListView mListView;
+        final TextView mEmptyView;
+        ViewHolder(View view) {
+            mListView = (ListView) view.findViewById(R.id.listview_forecast);
+            mEmptyView = (TextView) view.findViewById(R.id.empty_view);
+        }
     }
 }

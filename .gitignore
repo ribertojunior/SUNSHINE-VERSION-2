@@ -54,3 +54,4 @@ captures/
 .idea/runConfigurations.xml
 gradle/
 projectFilesBackup/
+/.idea/dbnavigator.xml
