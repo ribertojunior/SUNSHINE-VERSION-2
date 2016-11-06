@@ -31,6 +31,7 @@ public class SettingsActivity extends PreferenceActivity
         // Add 'general' preferences, defined in the XML file
         addPreferencesFromResource(R.xml.pref_general);
 
+
         // For all preferences, attach an OnPreferenceChangeListener so the UI summary can be
         // updated when the preference changes.
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_location_key)));
@@ -55,9 +56,23 @@ public class SettingsActivity extends PreferenceActivity
     }
 
     @Override
+    protected void onResume() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
+        super.onPause();
+    }
+
+    @Override
     public boolean onPreferenceChange(Preference preference, Object value) {
         String stringValue = value.toString();
-
+        String key = preference.getKey();
         if (preference instanceof ListPreference) {
             // For list preferences, look up the correct display value in
             // the preference's 'entries' list (since they have separate labels/values).
@@ -66,7 +81,24 @@ public class SettingsActivity extends PreferenceActivity
             if (prefIndex >= 0) {
                 preference.setSummary(listPreference.getEntries()[prefIndex]);
             }
-        } else {
+        }else if (key.equals(getString(R.string.pref_location_key))) {
+            @SunshineSyncAdapter.LocationStatus int status = Utility.getLocationStatus(this);
+            switch (status){
+                case SunshineSyncAdapter.LOCATION_STATUS_OK:
+                    preference.setSummary(stringValue);
+                    break;
+                case SunshineSyncAdapter.LOCATION_STATUS_UNKNOWN:
+                    preference.setSummary(
+                            getString(R.string.pref_location_unknown_description, stringValue));
+                    break;
+                case SunshineSyncAdapter.LOCATION_STATUS_INVALID:
+                    preference.setSummary(getString(R.string.pref_location_error_description, stringValue));
+                    break;
+                default:
+                    preference.setSummary(stringValue);
+            }
+        }
+        else{
             // For other preferences, set the summary to the value's simple string representation.
             preference.setSummary(stringValue);
         }
