@@ -21,6 +21,7 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.android.sunshine.app.data.WeatherContract;
 
 import static com.example.android.sunshine.app.ForecastFragment.COL_CITY_NAME;
@@ -116,7 +117,11 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
         ViewHolder viewHolder = new ViewHolder(getView());
         int weatherId = data.getInt(COL_WEATHER_CONDITION_ID);
-        viewHolder.iconView.setImageResource(Utility.getArtResourceForWeatherCondition(weatherId));
+        //viewHolder.iconView.setImageResource(Utility.getArtResourceForWeatherCondition(weatherId));
+        Glide.with(this)
+                .load(Utility.getArtUrlForWeatherCondition(getActivity(), weatherId))
+                .error(Utility.getArtResourceForWeatherCondition(weatherId))
+                .into(viewHolder.iconView);
 
         viewHolder.descriptionView.setText(data.getString(ForecastFragment.COL_WEATHER_DESC));
 

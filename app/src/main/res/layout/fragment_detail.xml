@@ -65,7 +65,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/list_item_icon"
-                    />
+                    android:contentDescription="@string/access_item_icon"
+                    android:adjustViewBounds="true"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -104,6 +105,8 @@
                 android:paddingTop="4dp"
                 android:paddingEnd="30dp"
                 android:paddingRight="30dp"
+                android:paddingLeft="30dp"
+
                 />
             <com.example.android.sunshine.app.WindCompass
                 android:layout_width="wrap_content"
@@ -114,7 +117,8 @@
                 <ImageView
                     android:background="@drawable/compass"
                     android:layout_width="80dp"
-                    android:layout_height="80dp" />
+                    android:layout_height="80dp"
+                    android:contentDescription="@string/access_wind_direction" />
 
                 <ImageView
                     android:id="@+id/agulha"

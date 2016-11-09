@@ -44,13 +44,32 @@
 
     <string name="pref_lon_key" translatable="false">longitude</string>
 
-    <string name="pref_location_status_key">locationStatus</string>
+    <string name="pref_location_status_key" translatable="false">locationStatus</string>
+    
+    <string name="pref_icon_key" translatable="false">icon</string>
+
+    <string name="pref_icon_default">https://raw.githubusercontent.com/udacity/Sunshine-Version-2/sunshine_master/app/src/main/res/drawable-xxhdpi/art_%s.png</string>
+
+    <string name="pref_icon_label">Icons Pack</string>
+
+    <string name="pref_icon_sunshine">Sunshine</string>
+
+    <string name="pref_icon_cute_dogs">Cute Dogs</string>
+
+    <!-- Value in SharedPreferences for Sunshine art pack option [CHAR LIMIT=NONE] -->
+    <string name="pref_art_pack_sunshine" translatable="false">https://raw.githubusercontent.com/udacity/Sunshine-Version-2/sunshine_master/app/src/main/res/drawable-xxhdpi/art_%s.png</string>
+
+    <!-- Value in SharedPreferences for cute dogs art pack  option [CHAR LIMIT=NONE] -->
+    <string name="pref_art_pack_cute_dogs" translatable="false">https://raw.githubusercontent.com/udacity/sunshine_icons/master/Archive/Colored/art_%s.png</string>
+
+
 
     <!-- Strings used when displaying the state of the Location in settings -->
     <string name="pref_location_error_description">Invalid Location (<xliff:g id="location_setting">%1$s</xliff:g>)"</string>
 
     <string name="pref_location_unknown_description">Validating Location... (<xliff:g id="location_setting">%1$s</xliff:g>)"</string>
 
+    <string name="format_art_url" translatable="false">https://raw.githubusercontent.com/udacity/Sunshine-Version-2/sunshine_master/app/src/main/res/drawable-xxhdpi/art_<xliff:g id="description">%s</xliff:g>.png</string>
 
     <!-- Date label when displaying today's weather forecast [CHAR LIMIT=20] -->
     <string name="today">Today</string>
@@ -108,5 +127,8 @@
     <string name="empty_forecast_list_server_error">No Weather Information Available. The Server Is Not Returning Valid Data.</string>
     <string name="empty_forecast_list_server_unknown">No Weather Information Available Due A Unknown Error.</string>
     <string name="empty_forecast_list_invalid_location">No weather information available. The location in settings is not recognized by the weather server.</string>
+    <string name="access_item_icon">A image ilustrating the weather</string>
+    <string name="access_wind_direction">A compass indicating the wind direction</string>
+    <string name="access_compass_s_needle">The compass\'s needle.</string>
 
 </resources>

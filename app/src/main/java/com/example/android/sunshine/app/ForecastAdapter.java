@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import static com.example.android.sunshine.app.ForecastFragment.COL_CITY_NAME;
 import static com.example.android.sunshine.app.ForecastFragment.COL_WEATHER_CONDITION_ID;
 import static com.example.android.sunshine.app.ForecastFragment.COL_WEATHER_MAX_TEMP;
@@ -75,11 +77,16 @@ public class ForecastAdapter extends CursorAdapter {
         int weatherId = cursor.getInt(COL_WEATHER_CONDITION_ID);
 
         if (view.getId()==R.id.forecast_today) {
-            viewHolder.iconView.setImageResource(Utility.getArtResourceForWeatherCondition(weatherId));
+            //viewHolder.iconView.setImageResource(Utility.getArtResourceForWeatherCondition(weatherId));
+
             viewHolder.cityView.setText(cursor.getString(COL_CITY_NAME));
         } else if (view.getId()==R.id.forecast) {
-            viewHolder.iconView.setImageResource(Utility.getIconResourceForWeatherCondition(weatherId));
+            //viewHolder.iconView.setImageResource(Utility.getIconResourceForWeatherCondition(weatherId));
         }
+        Glide.with(context)
+                .load(Utility.getArtUrlForWeatherCondition(context, weatherId))
+                .error(Utility.getArtResourceForWeatherCondition(weatherId))
+                .into(viewHolder.iconView);
 
 
 

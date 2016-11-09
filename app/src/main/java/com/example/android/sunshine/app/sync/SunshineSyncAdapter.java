@@ -16,6 +16,7 @@ import android.content.SharedPreferences;
 import android.content.SyncRequest;
 import android.content.SyncResult;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import android.support.v4.app.TaskStackBuilder;
 import android.text.format.Time;
 import android.util.Log;
 
+import com.bumptech.glide.Glide;
 import com.example.android.sunshine.app.BuildConfig;
 import com.example.android.sunshine.app.MainActivity;
 import com.example.android.sunshine.app.R;
@@ -44,8 +46,12 @@ import java.io.InputStreamReader;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Vector;
+import java.util.concurrent.ExecutionException;
+
+import static android.content.ContentValues.TAG;
 
 public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
     public final String LOG_TAG = SunshineSyncAdapter.class.getSimpleName();
@@ -495,6 +501,28 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
                 String city = cursor.getString(INDEX_CITY_NAME);
 
                 int iconId = Utility.getIconResourceForWeatherCondition(weatherId);
+                int largeIconWidth = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB
+                        ? context.getResources().getDimensionPixelSize(android.R.dimen.notification_large_icon_width)
+                        : context.getResources().getDimensionPixelSize(R.dimen.notification_large_icon_default);
+                int largeIconHeight = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB
+                        ? context.getResources().getDimensionPixelSize(android.R.dimen.notification_large_icon_height)
+                        : context.getResources().getDimensionPixelSize(R.dimen.notification_large_icon_default);
+
+                Bitmap largeIcon = null;
+                String uri = "";
+                try {
+                    uri = Utility.getArtUrlForWeatherCondition(context, weatherId);
+                    URL artUrl = new URL(Uri.parse(uri).toString());
+                    largeIcon = Glide.with(context)
+                            .load(artUrl)
+                            .asBitmap()
+                            .error(Utility.getArtResourceForWeatherCondition(iconId))
+                            .into(largeIconWidth, largeIconHeight)
+                            .get();
+                } catch (MalformedURLException | InterruptedException | ExecutionException e) {
+                    Log.e(TAG, "notifyWeather: Error loading image. Uri: "+uri);
+                    e.printStackTrace();
+                }
                 String title = context.getString(R.string.app_name);
 
                 // Define the text of the forecast.
@@ -514,6 +542,7 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
                         stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
                 Notification notification = new NotificationCompat.Builder(context)
                         .setSmallIcon(iconId)
+                        .setLargeIcon(largeIcon)
                         .setContentTitle(title)
                         .setContentIntent(pendingIntent)
                         .setContentText(contentText)

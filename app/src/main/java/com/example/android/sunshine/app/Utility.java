@@ -35,6 +35,12 @@ public class Utility {
     // back into date objects for comparison/processing.
     private static final String DATE_FORMAT = "yyyyMMdd";
 
+    public static String getPreferredIcon(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getString(context.getString(R.string.pref_icon_key),
+                context.getString(R.string.pref_icon_default));
+    }
+
     public static String getPreferredLocation(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getString(context.getString(R.string.pref_location_key),
@@ -278,6 +284,44 @@ public class Utility {
             return R.drawable.art_clouds;
         }
         return -1;
+    }
+
+    /**
+     * Helper method to provide the art urls according to the weather condition id returned
+     * by the OpenWeatherMap call.
+     *
+     * @param context Context to use for retrieving the URL format
+     * @param weatherId from OpenWeatherMap API response
+     * @return url for the corresponding weather artwork. null if no relation is found.
+     */
+    public static String getArtUrlForWeatherCondition(Context context, int weatherId) {
+        // Based on weather code data found at:
+        // http://bugs.openweathermap.org/projects/api/wiki/Weather_Condition_Codes
+        String icon_pack = getPreferredIcon(context);
+        if (weatherId >= 200 && weatherId <= 232) {
+            return String.format(Locale.US,icon_pack, "storm");
+        } else if (weatherId >= 300 && weatherId <= 321) {
+            return String.format(Locale.US,icon_pack, "light_rain");
+        } else if (weatherId >= 500 && weatherId <= 504) {
+            return String.format(Locale.US,icon_pack, "rain");
+        } else if (weatherId == 511) {
+            return String.format(Locale.US,icon_pack, "snow");
+        } else if (weatherId >= 520 && weatherId <= 531) {
+            return String.format(Locale.US,icon_pack, "rain");
+        } else if (weatherId >= 600 && weatherId <= 622) {
+            return String.format(Locale.US,icon_pack, "snow");
+        } else if (weatherId >= 701 && weatherId <= 761) {
+            return String.format(Locale.US,icon_pack, "fog");
+        } else if (weatherId == 761 || weatherId == 781) {
+            return String.format(Locale.US,icon_pack, "storm");
+        } else if (weatherId == 800) {
+            return String.format(Locale.US,icon_pack, "clear");
+        } else if (weatherId == 801) {
+            return String.format(Locale.US,icon_pack, "light_clouds");
+        } else if (weatherId >= 802 && weatherId <= 804) {
+            return String.format(Locale.US,icon_pack, "clouds");
+        }
+        return null;
     }
     static boolean isOnline(Context c) {
         ConnectivityManager cm =

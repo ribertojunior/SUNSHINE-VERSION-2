@@ -7,6 +7,7 @@
     android:paddingTop="16dp"
     android:paddingBottom="16dp"
     android:paddingLeft="60dp"
+    android:paddingStart="60dp"
     android:baselineAligned="false"
     android:id="@+id/forecast_today"
     android:background="@drawable/touch_selector_today">
@@ -65,6 +66,7 @@
             android:contentDescription="@string/weather_condition_illustration"
             android:maxHeight="100dp"
             android:maxWidth="100dp"
+            android:adjustViewBounds="true"
             />
         <TextView
             android:layout_width="wrap_content"

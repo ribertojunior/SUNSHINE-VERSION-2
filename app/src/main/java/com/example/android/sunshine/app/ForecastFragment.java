@@ -150,7 +150,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         });
 
         viewHolder.mListView.setItemChecked(0, true);
-        SunshineSyncAdapter.syncImmediately(getActivity());
+        //SunshineSyncAdapter.syncImmediately(getActivity());
         rootView.setTag(viewHolder);
         return rootView;
     }

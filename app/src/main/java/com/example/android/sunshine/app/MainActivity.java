@@ -1,28 +1,37 @@
 package com.example.android.sunshine.app;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.android.sunshine.app.sync.SunshineSyncAdapter;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 
 public class MainActivity extends ActionBarActivity implements ForecastFragment.Callback{
 
 
+    private static final String SENT_TOKEN_TO_SERVER = "sentMyLoveToYourNewLover";
     private final String LOG_TAG = MainActivity.class.getSimpleName();
     public static final String DETAILFRAGMENT_TAG = "DFTAG";
     private String mLocation;
     private boolean mTwoPane;
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         mLocation = Utility.getPreferredLocation(this);
         if (findViewById(R.id.weather_detail_container) != null) {
             // The detail container view will be present only in the large-screen layouts
@@ -47,6 +56,17 @@ public class MainActivity extends ActionBarActivity implements ForecastFragment.
                 .findFragmentById(R.id.fragment_forecast));
         forecastFragment.setUseTodayLayout(!mTwoPane);
         SunshineSyncAdapter.initializeSyncAdapter(this);
+        if (checkPlayServices()){
+            SharedPreferences sharedPreferences =
+                    PreferenceManager.getDefaultSharedPreferences(this);
+            boolean sentToken = sharedPreferences.getBoolean(SENT_TOKEN_TO_SERVER, false);
+            if (!sentToken) {
+                String token = FirebaseInstanceId.getInstance().getToken();
+                sharedPreferences.edit().putBoolean(SENT_TOKEN_TO_SERVER, true).apply();
+                Log.v(LOG_TAG, "onCreate: token: "+token);
+
+            }
+        }
     }
 
     @Override
@@ -116,5 +136,21 @@ public class MainActivity extends ActionBarActivity implements ForecastFragment.
         }
 
 
+    }
+
+    private boolean checkPlayServices() {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS){
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+                apiAvailability.getErrorDialog(this, resultCode,
+                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            } else{
+                Log.i(LOG_TAG, "checkPlayServices: This divice is not supported");
+                finish();
+            }
+            return false;
+        }
+        return true;
     }
 }

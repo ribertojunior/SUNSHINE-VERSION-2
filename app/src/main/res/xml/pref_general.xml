@@ -26,6 +26,14 @@
         android:defaultValue="@string/pref_units_default"
          />
 
+    <ListPreference
+        android:key="@string/pref_icon_key"
+        android:title="@string/pref_icon_label"
+        android:entries="@array/pref_icons_entries"
+        android:entryValues="@array/pref_icons_values"
+        android:defaultValue="@string/pref_art_pack_sunshine"
+        />
+
     <CheckBoxPreference
         android:key="@string/pref_notification_key"
         android:title="@string/pref_notification_title"
