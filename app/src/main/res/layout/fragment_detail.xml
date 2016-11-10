@@ -47,6 +47,12 @@
         android:paddingRight="@dimen/forecast_detail_horizontal_padding"
         android:paddingEnd="@dimen/forecast_detail_horizontal_padding">
 
+        <android.support.v7.widget.Space
+            app:layout_columnSpan="2"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"
+            app:layout_gravity="fill_horizontal"/>
+
         <TextView
             android:id="@+id/detail_humidity_label_textview"
             android:fontFamily="sans-serif"
@@ -117,6 +123,8 @@
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"
              />
+
+
     </android.support.v7.widget.GridLayout>
 
     <!--ImageSwitcher

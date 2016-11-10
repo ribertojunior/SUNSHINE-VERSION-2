@@ -1,82 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:minHeight="?android:attr/listPreferredItemHeight"
-    android:paddingTop="16dp"
-    android:paddingBottom="16dp"
-    android:paddingLeft="60dp"
-    android:paddingStart="60dp"
-    android:baselineAligned="false"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
     android:id="@+id/forecast_today"
-    android:background="@drawable/touch_selector_today">
 
-    <LinearLayout
-        android:layout_width="0dp"
+    >
+    <include layout="@layout/detail_today_grid"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:elevation="8dp"
 
-        android:layout_weight="1">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/city_name_text_view"
-            android:fontFamily="sans-serif-condensed"
-            android:textSize="16sp"
-            android:textColor="@android:color/white"
-            android:background="@color/colorPrimary"
-            tools:text="São José"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/detail_date_textview"
-            android:fontFamily="sans-serif-condensed"
-            android:textSize="22sp"
-            android:textColor="@android:color/white"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/detail_high_textview"
-            android:textSize="72sp"
-            android:textColor="@android:color/white"
-            android:fontFamily="sans-serif-light" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/detail_low_textview"
-            android:padding="8dp"
-            android:textSize="36sp"
-            android:textColor="@android:color/white"
-            android:fontFamily="sans-serif-light"/>
-
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:layout_weight="1">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/detail_icon"
-            android:contentDescription="@string/weather_condition_illustration"
-            android:maxHeight="100dp"
-            android:maxWidth="100dp"
-            android:adjustViewBounds="true"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/detail_forecast_textview"
-            android:paddingTop="16dp"
-            android:textSize="22sp"
-            android:textColor="@android:color/white"
-            android:fontFamily="sans-serif-condensed" />
-    </LinearLayout>
-
-</LinearLayout>
+        />
+</FrameLayout>
