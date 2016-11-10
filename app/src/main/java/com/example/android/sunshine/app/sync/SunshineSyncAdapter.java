@@ -492,7 +492,9 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
 
             // we'll query our contentProvider, as always
             Cursor cursor = context.getContentResolver().query(weatherUri, NOTIFY_WEATHER_PROJECTION, null, null, null);
-
+            if (cursor == null) {
+                return;
+            }
             if (cursor.moveToFirst()) {
                 int weatherId = cursor.getInt(INDEX_WEATHER_ID);
                 double high = cursor.getDouble(INDEX_MAX_TEMP);
@@ -523,6 +525,7 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
                     Log.e(TAG, "notifyWeather: Error loading image. Uri: "+uri);
                     e.printStackTrace();
                 }
+                //largeIcon = Utility.getBitmapIconFromWeatherID(context, weatherId);
                 String title = context.getString(R.string.app_name);
 
                 // Define the text of the forecast.
@@ -556,6 +559,7 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
                 editor.putLong(lastNotificationKey, System.currentTimeMillis());
                 editor.apply();
             }
+            cursor.close();
         }
 
     }

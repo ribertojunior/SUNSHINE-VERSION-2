@@ -1,136 +1,127 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<!--
+     Copyright (C) 2015 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+ -->
+<!-- Master layout. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"  >
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:color/white" />
+
+    <include layout="@layout/detail_today_grid"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        />
+
+    <android.support.v7.widget.GridLayout
+        android:id="@+id/detail_additional_pane"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        app:columnCount="2"
+        android:background="@color/detail_accent_pane_background"
+        android:paddingBottom="@dimen/detail_view_extra_padding"
+        android:paddingTop="@dimen/detail_view_extra_padding"
+        android:paddingLeft="@dimen/forecast_detail_horizontal_padding"
+        android:paddingStart="@dimen/forecast_detail_horizontal_padding"
+        android:paddingRight="@dimen/forecast_detail_horizontal_padding"
+        android:paddingEnd="@dimen/forecast_detail_horizontal_padding">
+
+        <TextView
+            android:id="@+id/detail_humidity_label_textview"
+            android:fontFamily="sans-serif"
+            android:gravity="center_vertical"
+            android:text="@string/humidity"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textColor="@color/detail_accent_label"
+            app:layout_gravity="fill"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"
+
+            />
+
+        <TextView
+            android:id="@+id/detail_humidity_textview"
+            android:gravity="center_vertical"
+            tools:text="38%"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="@android:color/white"
+            app:layout_gravity="fill"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"
+            />
+
+        <TextView
+            android:id="@+id/detail_pressure_label_textview"
+            android:fontFamily="sans-serif"
+            android:gravity="center_vertical"
+            android:text="@string/pressure"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textColor="@color/detail_accent_label"
+            app:layout_gravity="fill"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"
+            />
+
+        <TextView
+            android:id="@+id/detail_pressure_textview"
+            android:gravity="center_vertical"
+            tools:text="995 hPa"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="@android:color/white"
+            app:layout_gravity="fill"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"
+            />
+
+        <TextView
+            android:id="@+id/detail_wind_label_textview"
+            android:fontFamily="sans-serif"
+            android:gravity="center_vertical"
+            android:text="@string/wind"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textColor="@color/detail_accent_label"
+            app:layout_gravity="fill_horizontal"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"
+            />
+
+
+        <TextView
+            android:id="@+id/detail_wind_textview"
+            android:gravity="center_vertical"
+            tools:text="4km/h NW"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="@android:color/white"
+            app:layout_gravity="fill_horizontal"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"
+             />
+    </android.support.v7.widget.GridLayout>
+
+    <!--ImageSwitcher
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/city_name_text_view"
-            android:fontFamily="sans-serif-condensed"
-            android:textSize="16sp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/list_item_date_friendly_textview"
-            android:textSize="24sp"
-            android:fontFamily="sans-serif-condensed"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/list_item_date_textview"
-            android:textSize="16sp"
-            android:fontFamily="sans-serif-condensed"
-            android:textColor="#646464"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:padding="16dp">
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/list_item_high_textview"
-                    android:textSize="96sp"
-                    android:fontFamily="sans-serif-light"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/list_item_low_textview"
-                    android:textSize="48sp"
-                    android:fontFamily="sans-serif-light"
-                    android:textColor="#646464"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center_horizontal"
-                android:paddingTop="16dp">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/list_item_icon"
-                    android:contentDescription="@string/access_item_icon"
-                    android:adjustViewBounds="true"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/list_item_forecast_textview"
-                    android:textSize="22sp"
-                    android:fontFamily="sans-serif-condensed"
-                    android:textColor="#646464"
-                    />
-            </LinearLayout>
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/list_item_hum_value_textview"
-            android:textSize="22sp"
-            android:fontFamily="sans-serif-light"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/list_item_pressure_value_textview"
-            android:textSize="22sp"
-            android:fontFamily="sans-serif-light"
-            android:paddingTop="4dp"
-            />
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/list_item_wind_desc_textview"
-                android:textSize="22sp"
-                android:fontFamily="sans-serif-light"
-                android:paddingTop="4dp"
-                android:paddingEnd="30dp"
-                android:paddingRight="30dp"
-                android:paddingLeft="30dp"
-
-                />
-            <com.example.android.sunshine.app.WindCompass
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/compass"
-                >
-
-                <ImageView
-                    android:background="@drawable/compass"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:contentDescription="@string/access_wind_direction" />
-
-                <ImageView
-                    android:id="@+id/agulha"
-                    android:background="@drawable/agulha"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    />
-
-                </com.example.android.sunshine.app.WindCompass>
-        </LinearLayout>
-
-
-
-    </LinearLayout>
-</ScrollView>
+        android:id="@+id/imageSwitcher"
+        android:layout_gravity="right" /-->
+</LinearLayout>

@@ -32,7 +32,7 @@
              notification message. See README(https://goo.gl/6BKBk7) for more. -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/sunshine_light_blue" />
+            android:resource="@color/colorPrimaryLight" />
         <!-- [END fcm_default_icon] -->
         <provider
             android:authorities="@string/content_authority"
@@ -42,7 +42,7 @@
 
         <activity
             android:name=".MainActivity"
-            android:theme="@style/ForecastTheme"
+            android:theme="@style/AppTheme"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

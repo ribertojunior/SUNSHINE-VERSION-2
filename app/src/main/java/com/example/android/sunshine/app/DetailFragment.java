@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.ShareActionProvider;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -62,17 +61,17 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.detailfragment, menu);
-
-        MenuItem menuItem = menu.findItem(R.id.action_share);
-
-        mShareActionProvider =
-                (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
-
-        if (mForecast != null) {
-            mShareActionProvider.setShareIntent(createShareForecastIntent());
+        if ( getActivity() instanceof DetailActivity ){
+            // Inflate the menu; this adds items to the action bar if it is present.
+            inflater.inflate(R.menu.detailfragment, menu);
+            finishCreatingMenu(menu);
         }
 
+    }
+    private void finishCreatingMenu(Menu menu) {
+        // Retrieve the share menu item
+        MenuItem menuItem = menu.findItem(R.id.action_share);
+        menuItem.setIntent(createShareForecastIntent());
     }
 
     private Intent createShareForecastIntent() {
@@ -126,9 +125,9 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         viewHolder.descriptionView.setText(data.getString(ForecastFragment.COL_WEATHER_DESC));
 
         long date =  data.getLong(COL_WEATHER_DATE);
-        String friendlyDateText = Utility.getDayName(getActivity(), date);
+        //String friendlyDateText = Utility.getDayName(getActivity(), date);
         String dateText = Utility.getFormattedMonthDay(getActivity(), date);
-        viewHolder.dateFriendly.setText(friendlyDateText);
+        //viewHolder.dateFriendly.setText(friendlyDateText);
         viewHolder.dateView.setText(dateText);
 
         viewHolder.cityView.setText(data.getString(COL_CITY_NAME));
@@ -150,11 +149,11 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
 
 
-        if (viewHolder.agulha!=null) {
+        /*if (viewHolder.agulha!=null) {
             float degrees = data.getFloat(COL_DEGREES)+360;
             viewHolder.compass.setDegrees(data.getFloat(COL_DEGREES)+360);
             viewHolder.agulha.startAnimation(rotate(degrees));
-        }
+        }*/
 
 
 
@@ -199,29 +198,29 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         public final ImageView iconView;
         public final TextView cityView;
         public final TextView dateView;
-        public final TextView dateFriendly;
+        //public final TextView dateFriendly;
         public final TextView descriptionView;
         public final TextView highTempView;
         public final TextView lowTempView;
         public final TextView humidity;
         public final TextView wind;
         public final TextView pressure;
-        public final WindCompass compass;
-        public final ImageView agulha;
+        /*public final WindCompass compass;
+        public final ImageView agulha;*/
 
         public ViewHolder(View view) {
-            iconView = (ImageView) view.findViewById(R.id.list_item_icon);
-            cityView = (TextView) view.findViewById(R.id.city_name_text_view);
-            dateView = (TextView) view.findViewById(R.id.list_item_date_textview);
-            dateFriendly = (TextView) view.findViewById(R.id.list_item_date_friendly_textview);
-            descriptionView = (TextView) view.findViewById(R.id.list_item_forecast_textview);
-            highTempView = (TextView) view.findViewById(R.id.list_item_high_textview);
-            lowTempView = (TextView) view.findViewById(R.id.list_item_low_textview);
-            humidity = (TextView) view.findViewById(R.id.list_item_hum_value_textview);
-            wind = (TextView) view.findViewById(R.id.list_item_wind_desc_textview);
-            pressure = (TextView)  view.findViewById(R.id.list_item_pressure_value_textview);
-            compass = (WindCompass) view.findViewById(R.id.compass);
-            agulha = (ImageView) view.findViewById(R.id.agulha);
+            iconView = (ImageView) view.findViewById(R.id.detail_icon);
+            cityView = (TextView) view.findViewById(R.id.city_name_text_view);//new TextView(view.getContext());
+            dateView = (TextView) view.findViewById(R.id.detail_date_textview);
+            //dateFriendly = (TextView) view.findViewById(R.id.list_item_date_friendly_textview);
+            descriptionView = (TextView) view.findViewById(R.id.detail_forecast_textview);
+            highTempView = (TextView) view.findViewById(R.id.detail_high_textview);
+            lowTempView = (TextView) view.findViewById(R.id.detail_low_textview);
+            humidity = (TextView) view.findViewById(R.id.detail_humidity_textview);
+            wind = (TextView) view.findViewById(R.id.detail_wind_textview);
+            pressure = (TextView)  view.findViewById(R.id.detail_pressure_textview);
+            /*compass = (WindCompass) view.findViewById(R.id.compass);
+            agulha = (ImageView) view.findViewById(R.id.agulha);*/
 
         }
     }

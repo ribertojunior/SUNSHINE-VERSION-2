@@ -25,26 +25,27 @@
             android:fontFamily="sans-serif-condensed"
             android:textSize="16sp"
             android:textColor="@android:color/white"
-            android:background="@color/sunshine_blue"
+            android:background="@color/colorPrimary"
+            tools:text="São José"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/list_item_date_textview"
+            android:id="@+id/detail_date_textview"
             android:fontFamily="sans-serif-condensed"
             android:textSize="22sp"
             android:textColor="@android:color/white"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/list_item_high_textview"
+            android:id="@+id/detail_high_textview"
             android:textSize="72sp"
             android:textColor="@android:color/white"
             android:fontFamily="sans-serif-light" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/list_item_low_textview"
+            android:id="@+id/detail_low_textview"
             android:padding="8dp"
             android:textSize="36sp"
             android:textColor="@android:color/white"
@@ -62,7 +63,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/list_item_icon"
+            android:id="@+id/detail_icon"
             android:contentDescription="@string/weather_condition_illustration"
             android:maxHeight="100dp"
             android:maxWidth="100dp"
@@ -71,7 +72,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/list_item_forecast_textview"
+            android:id="@+id/detail_forecast_textview"
             android:paddingTop="16dp"
             android:textSize="22sp"
             android:textColor="@android:color/white"

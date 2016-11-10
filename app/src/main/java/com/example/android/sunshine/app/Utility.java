@@ -17,18 +17,28 @@ package com.example.android.sunshine.app;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.text.format.Time;
+import android.util.Log;
 
+import com.bumptech.glide.Glide;
 import com.example.android.sunshine.app.sync.SunshineSyncAdapter;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
+
+import static com.google.android.gms.internal.zzs.TAG;
 
 public class Utility {
     // Format used for storing dates in the database.  Also used for converting those strings
@@ -341,5 +351,32 @@ public class Utility {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         prefs.edit().putInt(context.getString(R.string.pref_location_status_key),
                 SunshineSyncAdapter.LOCATION_STATUS_UNKNOWN).apply();
+    }
+
+    public static Bitmap getBitmapIconFromWeatherID(Context context, int weatherId){
+        int iconId = Utility.getIconResourceForWeatherCondition(weatherId);
+        int largeIconWidth = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB
+                ? context.getResources().getDimensionPixelSize(android.R.dimen.notification_large_icon_width)
+                : context.getResources().getDimensionPixelSize(R.dimen.notification_large_icon_default);
+        int largeIconHeight = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB
+                ? context.getResources().getDimensionPixelSize(android.R.dimen.notification_large_icon_height)
+                : context.getResources().getDimensionPixelSize(R.dimen.notification_large_icon_default);
+
+        Bitmap largeIcon = null;
+        String uri = "";
+        try {
+            uri = Utility.getArtUrlForWeatherCondition(context, weatherId);
+            URL artUrl = new URL(Uri.parse(uri).toString());
+            largeIcon = Glide.with(context)
+                    .load(artUrl)
+                    .asBitmap()
+                    .error(Utility.getArtResourceForWeatherCondition(iconId))
+                    .into(largeIconWidth, largeIconHeight)
+                    .get();
+        } catch (MalformedURLException | InterruptedException | ExecutionException e) {
+            Log.e(TAG, "notifyWeather: Error loading image. Uri: "+uri);
+            e.printStackTrace();
+        }
+        return largeIcon;
     }
 }

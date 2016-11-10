@@ -127,12 +127,12 @@ public class ForecastAdapter extends CursorAdapter {
         public final TextView lowTempView;
 
         public ViewHolder(View view) {
-            iconView = (ImageView) view.findViewById(R.id.list_item_icon);
+            iconView = (ImageView) view.findViewById(R.id.detail_icon);
             cityView = (TextView) view.findViewById(R.id.city_name_text_view);
-            dateView = (TextView) view.findViewById(R.id.list_item_date_textview);
-            descriptionView = (TextView) view.findViewById(R.id.list_item_forecast_textview);
-            highTempView = (TextView) view.findViewById(R.id.list_item_high_textview);
-            lowTempView = (TextView) view.findViewById(R.id.list_item_low_textview);
+            dateView = (TextView) view.findViewById(R.id.detail_date_textview);
+            descriptionView = (TextView) view.findViewById(R.id.detail_forecast_textview);
+            highTempView = (TextView) view.findViewById(R.id.detail_high_textview);
+            lowTempView = (TextView) view.findViewById(R.id.detail_low_textview);
         }
     }
 

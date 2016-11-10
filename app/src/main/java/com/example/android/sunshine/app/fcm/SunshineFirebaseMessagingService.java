@@ -20,7 +20,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
@@ -28,6 +27,7 @@ import android.util.Log;
 
 import com.example.android.sunshine.app.MainActivity;
 import com.example.android.sunshine.app.R;
+import com.example.android.sunshine.app.Utility;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -41,6 +41,7 @@ public class SunshineFirebaseMessagingService extends FirebaseMessagingService {
     private static final String EXTRA_DATA = "data";
     private static final String EXTRA_WEATHER = "weather";
     private static final String EXTRA_LOCATION = "location";
+    private static final String EXTRA_WEATHER_ID = "weather_id";
 
     public static final int NOTIFICATION_ID = 1;
 
@@ -68,8 +69,9 @@ public class SunshineFirebaseMessagingService extends FirebaseMessagingService {
                     JSONObject jsonObject =  new JSONObject(remoteMessage.getNotification().getBody());
                     String weather = jsonObject.getString(EXTRA_WEATHER);
                     String location = jsonObject.getString(EXTRA_LOCATION);
+                    int weatherId = jsonObject.getInt(EXTRA_WEATHER_ID);
                     String alert = String.format(getString(R.string.gcm_weather_alert), weather, location);
-                    sendNotification(alert);
+                    sendNotification(alert, weatherId);
                 }catch (JSONException e){
                     Log.e(TAG, "onMessageReceived: Body: " + remoteMessage.getNotification().getBody() );
                     e.printStackTrace();
@@ -100,18 +102,19 @@ public class SunshineFirebaseMessagingService extends FirebaseMessagingService {
      *
      * @param messageBody FCM message body received.
      */
-    private void sendNotification(String messageBody) {
+    private void sendNotification(String messageBody, int weatherId) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
-        Bitmap largeIcon =
-                BitmapFactory.decodeResource(this.getResources(), R.drawable.art_storm);
+        /*Bitmap largeIcon =
+                BitmapFactory.decodeResource(this.getResources(), R.drawable.art_storm);*/
+        Bitmap largeIcon = Utility.getBitmapIconFromWeatherID(this, weatherId);
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_b_w)
                 .setLargeIcon(largeIcon)
-                .setContentTitle("FCM Message")
+                .setContentTitle("Sunshine Alert")
                 .setContentText(messageBody)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)

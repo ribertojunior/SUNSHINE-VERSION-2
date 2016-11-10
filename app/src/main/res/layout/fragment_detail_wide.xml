@@ -30,7 +30,7 @@
                 android:fontFamily="sans-serif-condensed"/>
 
             <TextView
-                android:id="@+id/list_item_date_textview"
+                android:id="@+id/detail_date_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
@@ -48,14 +48,14 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/list_item_high_textview"
+                android:id="@+id/detail_high_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="96sp"
                 android:fontFamily="sans-serif-light"/>
 
             <TextView
-                android:id="@+id/list_item_low_textview"
+                android:id="@+id/detail_low_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="48sp"
@@ -64,7 +64,7 @@
 
             <!-- Humidity, wind, pressure -->
             <TextView
-                android:id="@+id/list_item_hum_value_textview"
+                android:id="@+id/detail_umidity_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="22sp"
@@ -72,7 +72,7 @@
                 />
 
             <TextView
-                android:id="@+id/list_item_pressure_value_textview"
+                android:id="@+id/detail_pressure_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="22sp"
@@ -80,7 +80,7 @@
                 android:paddingTop="4dp"/>
 
             <TextView
-                android:id="@+id/list_item_wind_desc_textview"
+                android:id="@+id/detail_wind_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="22sp"
@@ -116,13 +116,13 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/list_item_icon"
+                android:id="@+id/detail_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"/>
 
             <TextView
-                android:id="@+id/list_item_forecast_textview"
+                android:id="@+id/detail_forecast_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="22sp"
