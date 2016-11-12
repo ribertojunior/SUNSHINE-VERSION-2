@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:id="@+id/forecast_today"
     android:background="@drawable/touch_selector_white"
+    android:elevation="@dimen/appbar_elevation"
     >
     <include layout="@layout/detail_today_grid"
         android:layout_width="match_parent"

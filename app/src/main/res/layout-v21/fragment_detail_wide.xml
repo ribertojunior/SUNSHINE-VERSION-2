@@ -69,6 +69,7 @@
 
         <TextView
             android:id="@+id/detail_humidity_label_textview"
+            android:fontFamily="sans-serif"
             android:gravity="center_vertical"
             android:text="@string/humidity"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
@@ -112,6 +113,7 @@
 
         <TextView
             android:id="@+id/detail_wind_label_textview"
+            android:fontFamily="sans-serif"
             android:gravity="center_vertical"
             android:text="@string/wind"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"

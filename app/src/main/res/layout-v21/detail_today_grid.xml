@@ -17,7 +17,7 @@
 
 <android.support.v7.widget.GridLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@android:color/white"
@@ -43,6 +43,7 @@
         <TextView
             android:id="@+id/city_name_text_view"
             android:gravity="center_horizontal"
+            android:fontFamily="sans-serif-condensed"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textColor="@color/secondary_text"
             android:layout_marginTop="@dimen/detail_view_extra_padding"
@@ -55,6 +56,7 @@
             android:id="@+id/detail_date_textview"
             android:layout_marginBottom="@dimen/detail_view_extra_padding"
             android:layout_marginTop="@dimen/detail_view_extra_padding"
+            android:fontFamily="sans-serif"
             android:gravity="center_horizontal"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textColor="@color/secondary_text"
@@ -71,10 +73,12 @@
             android:adjustViewBounds="true"
             app:layout_columnWeight="1"
             app:layout_gravity="fill"
+            android:contentDescription="@string/access_item_icon"
             tools:src="@drawable/art_clouds" />
 
         <TextView
             android:id="@+id/detail_high_textview"
+            android:fontFamily="sans-serif-light"
             android:gravity="center_horizontal"
             android:textColor="@color/primary_text"
             android:textSize="72sp"
@@ -84,6 +88,7 @@
 
         <TextView
             android:id="@+id/detail_forecast_textview"
+            android:fontFamily="sans-serif"
             android:gravity="center_horizontal"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textColor="@color/secondary_text"
@@ -94,6 +99,7 @@
         <TextView
             android:id="@+id/detail_low_textview"
             android:layout_marginBottom="@dimen/detail_view_extra_padding"
+            android:fontFamily="sans-serif-light"
             android:gravity="center_horizontal"
             android:textColor="@color/secondary_text"
             android:textSize="36sp"

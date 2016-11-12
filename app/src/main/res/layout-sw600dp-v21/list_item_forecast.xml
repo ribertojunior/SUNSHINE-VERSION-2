@@ -28,8 +28,7 @@
             android:adjustViewBounds="true"
             android:layout_gravity="center"
             tools:src="@drawable/art_clear"
-            android:layout_marginEnd="@dimen/forecast_temperature_space"
-            android:layout_marginRight="@dimen/forecast_temperature_space" />
+            android:layout_marginEnd="@dimen/forecast_temperature_space"/>
 
 
         <LinearLayout
@@ -43,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/detail_date_textview"
-
+                android:fontFamily="sans-serif-condensed"
                 tools:text="Tomorrow"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
@@ -52,6 +51,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/detail_forecast_textview"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:fontFamily="sans-serif-condensed"
                 android:textColor="@color/secondary_text"
                 tools:text="Clear" />
         </LinearLayout>
@@ -65,13 +65,15 @@
             android:layout_gravity="center"
             android:gravity="end"
             tools:text="-20°"
-            android:layout_marginEnd="@dimen/forecast_temperature_space"
-            android:layout_marginRight="@dimen/forecast_temperature_space" />
+            android:fontFamily="sans-serif-light"
+            android:layout_marginEnd="@dimen/forecast_temperature_space" />
 
         <TextView
             android:layout_width="@dimen/forecast_text_width"
             android:layout_height="wrap_content"
+
             android:id="@+id/detail_low_textview"
+            android:fontFamily="sans-serif-light"
             android:textSize="@dimen/forecast_text_size"
             android:layout_gravity="center"
             android:gravity="end"

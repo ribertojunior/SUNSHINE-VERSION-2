@@ -1,71 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="?android:attr/listPreferredItemHeight"
+
     android:id="@+id/forecast"
-    android:gravity="center_vertical"
-    android:background="@drawable/touch_selector"
-    android:padding="16dp"    >
+    android:background="@drawable/touch_selector">
 
-    <FrameLayout
-        android:layout_width="60dp"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:minHeight="?android:attr/listPreferredItemHeight"
+        android:paddingLeft="@dimen/detail_view_extra_padding"
+        android:paddingRight="@dimen/detail_view_extra_padding"
+        android:orientation="horizontal">
+        <android.support.v4.widget.Space
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <ImageView
+            android:layout_width="@dimen/list_icon"
+            android:layout_height="@dimen/list_icon"
+
             android:contentDescription="@string/weather_condition_illustration"
             android:id="@+id/detail_icon"
             android:adjustViewBounds="true"
             android:layout_gravity="center"
-            />
-    </FrameLayout>
+            tools:src="@drawable/art_clear"
+            android:layout_marginEnd="@dimen/forecast_temperature_space"
+            android:layout_marginRight="@dimen/forecast_temperature_space" />
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="6"
-        >
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/detail_date_textview"
-            android:textSize="20sp"
-            android:fontFamily="sans-serif-condensed"
-            />
+            android:orientation="vertical"
+            android:layout_weight="7"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detail_date_textview"
+                tools:text="Tomorrow"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detail_forecast_textview"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/secondary_text"
+                tools:text="Clear" />
+        </LinearLayout>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/detail_forecast_textview"
-            android:textSize="12sp"
-            android:fontFamily="sans-serif-condensed"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="4"
-        android:gravity="center">
-        <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/forecast_text_width"
             android:layout_height="wrap_content"
             android:id="@+id/detail_high_textview"
-            android:textSize="20sp"
+            android:textSize="@dimen/forecast_text_size"
             android:layout_gravity="center"
-            />
+            android:gravity="end"
+            tools:text="-20°"
+
+            android:layout_marginEnd="@dimen/forecast_temperature_space"
+            android:layout_marginRight="@dimen/forecast_temperature_space" />
+
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/forecast_text_width"
             android:layout_height="wrap_content"
             android:id="@+id/detail_low_textview"
-            android:textSize="12sp"
+            android:textSize="@dimen/forecast_text_size"
             android:layout_gravity="center"
-            />
+            android:gravity="end"
+            android:textColor="@color/forecast_low_text"
+            tools:text="-26°" />
+        <android.support.v4.widget.Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
     </LinearLayout>
 
-</LinearLayout>
+
+</FrameLayout>

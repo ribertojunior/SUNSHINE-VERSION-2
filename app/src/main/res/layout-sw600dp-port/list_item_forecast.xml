@@ -3,9 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
     android:id="@+id/forecast"
-    android:background="@drawable/touch_selector">
+    android:background="@drawable/touch_selector"
+    android:paddingLeft="@dimen/list_item_extra_padding"
+    android:paddingRight="@dimen/list_item_extra_padding">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,7 +44,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/detail_date_textview"
-
                 tools:text="Tomorrow"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
@@ -59,12 +59,12 @@
         <TextView
             android:layout_width="@dimen/forecast_text_width"
             android:layout_height="wrap_content"
-
             android:id="@+id/detail_high_textview"
             android:textSize="@dimen/forecast_text_size"
             android:layout_gravity="center"
             android:gravity="end"
             tools:text="-20°"
+
             android:layout_marginEnd="@dimen/forecast_temperature_space"
             android:layout_marginRight="@dimen/forecast_temperature_space" />
 
@@ -76,6 +76,8 @@
             android:layout_gravity="center"
             android:gravity="end"
             android:textColor="@color/forecast_low_text"
+            android:layout_marginEnd="@dimen/forecast_temperature_space"
+            android:layout_marginRight="@dimen/forecast_temperature_space"
             tools:text="-26°" />
         <android.support.v4.widget.Space
             android:layout_width="0dp"
