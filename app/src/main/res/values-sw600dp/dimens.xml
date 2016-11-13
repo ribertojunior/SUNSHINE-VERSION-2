@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="list_item_extra_padding">64dp</dimen>
+    <dimen name="list_item_extra_padding">80dp</dimen>
     <dimen name="forecast_temperature_space">16dp</dimen>
 
 

@@ -20,14 +20,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:baselineAligned="false">
 
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_weight="4" >
+        android:layout_weight="5" >
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -36,22 +37,15 @@
         <include
             layout="@layout/detail_today_grid"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             />
 
-
-
-        <!--ImageSwitcher
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageSwitcher"
-            android:layout_gravity="right" /-->
     </LinearLayout>
     <android.support.v7.widget.GridLayout
         android:id="@+id/detail_additional_pane"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="2"
+        android:layout_weight="4"
         app:columnCount="2"
         android:background="@color/detail_accent_pane_background"
         android:paddingBottom="@dimen/detail_view_extra_padding"
@@ -64,8 +58,7 @@
         <android.support.v7.widget.Space
             app:layout_columnSpan="2"
             app:layout_columnWeight="1"
-            app:layout_rowWeight="1"
-            app:layout_gravity="fill" />
+            app:layout_rowWeight="1"/>
 
         <TextView
             android:id="@+id/detail_humidity_label_textview"
@@ -136,7 +129,6 @@
         <android.support.v7.widget.Space
             app:layout_columnSpan="2"
             app:layout_columnWeight="1"
-            app:layout_rowWeight="1"
-            app:layout_gravity="fill" />
+            app:layout_rowWeight="1" />
     </android.support.v7.widget.GridLayout>
 </LinearLayout>
