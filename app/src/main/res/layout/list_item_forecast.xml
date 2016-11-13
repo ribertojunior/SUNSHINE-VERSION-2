@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
     android:id="@+id/forecast"
     android:background="@drawable/touch_selector">
 
@@ -22,7 +21,6 @@
         <ImageView
             android:layout_width="@dimen/list_icon"
             android:layout_height="@dimen/list_icon"
-
             android:contentDescription="@string/weather_condition_illustration"
             android:id="@+id/detail_icon"
             android:adjustViewBounds="true"
@@ -43,7 +41,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/detail_date_textview"
-
                 tools:text="Tomorrow"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
@@ -59,7 +56,6 @@
         <TextView
             android:layout_width="@dimen/forecast_text_width"
             android:layout_height="wrap_content"
-
             android:id="@+id/detail_high_textview"
             android:textSize="@dimen/forecast_text_size"
             android:layout_gravity="center"

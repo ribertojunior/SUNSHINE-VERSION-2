@@ -115,7 +115,10 @@ public class MainActivity extends ActionBarActivity implements ForecastFragment.
             if (ff != null) {
                 ff.onLocationChanged();
             }
-            DetailFragment df = (DetailFragment) getSupportFragmentManager().findFragmentByTag(DETAILFRAGMENT_TAG);
+            DetailFragment df = (DetailFragment) getSupportFragmentManager().findFragmentByTag(DETAILFRAGMENT_TAG); //works on phone
+            if (df == null) {
+                df = (DetailFragment) getSupportFragmentManager().findFragmentById(R.id.weather_detail_container);
+            }
             if (df != null) {
                 df.onLocationChanged(location);
             }

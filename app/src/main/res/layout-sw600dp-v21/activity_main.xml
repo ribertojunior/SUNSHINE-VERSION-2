@@ -44,7 +44,6 @@
         android:layout_below="@id/sunshine_logo_imageview"
         android:layout_marginEnd="@dimen/list_item_extra_padding"
         android:layout_marginRight="@dimen/list_item_extra_padding"
-        android:paddingBottom="@dimen/detail_container_bottom_margin"
         />
     <fragment
         android:id="@+id/fragment_forecast"
