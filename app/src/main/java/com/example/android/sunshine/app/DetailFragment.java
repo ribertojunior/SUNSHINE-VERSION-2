@@ -10,8 +10,10 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.ShareActionProvider;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -41,7 +43,6 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     private final String LOG_TAG = DetailFragment.class.getSimpleName();
     private static final String FORECAST_SHARE_HASHTAG = "#SunshineApp";
-    ShareActionProvider mShareActionProvider;
     String mForecast;
     private static final int LOADER_ID = 15;
     Uri mUri;
@@ -71,6 +72,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         }
 
     }
+
     private void finishCreatingMenu(Menu menu) {
         // Retrieve the share menu item
         MenuItem menuItem = menu.findItem(R.id.action_share);
@@ -84,6 +86,25 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         shareIntent.putExtra(Intent.EXTRA_TEXT, mForecast + " " + FORECAST_SHARE_HASHTAG);
         return shareIntent;
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+
+            case R.id.action_settings:
+
+                break;
+            case R.id.action_share:
+
+            default:
+                return true;
+
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void onLocationChanged(String location) {
@@ -119,14 +140,16 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         //ArrayList<String> strings = new ArrayList<String>();
         //strings.add(convertCursorRowToUXFormat(data));
-        if (!data.moveToFirst()) {return;}
+        if (!data.moveToFirst()) {
+            return;
+        }
         ViewParent vp = getView().getParent();
-        if ( vp instanceof CardView ) {
-            ((View)vp).setVisibility(View.VISIBLE);
+        if (vp instanceof CardView) {
+            ((View) vp).setVisibility(View.VISIBLE);
         }
         ViewHolder viewHolder = new ViewHolder(getView());
         int weatherId = data.getInt(COL_WEATHER_CONDITION_ID);
-        //viewHolder.iconView.setImageResource(Utility.getArtResourceForWeatherCondition(weatherId));
+        //viewHolder.mIconView.setImageResource(Utility.getArtResourceForWeatherCondition(weatherId));
         Glide.with(this)
                 .load(Utility.getArtUrlForWeatherCondition(getActivity(), weatherId))
                 .error(Utility.getArtResourceForWeatherCondition(weatherId))
@@ -134,7 +157,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
         viewHolder.descriptionView.setText(data.getString(ForecastFragment.COL_WEATHER_DESC));
 
-        long date =  data.getLong(COL_WEATHER_DATE);
+        long date = data.getLong(COL_WEATHER_DATE);
         //String friendlyDateText = Utility.getDayName(getActivity(), date);
         String dateText = Utility.getFormattedMonthDay(getActivity(), date);
         //viewHolder.dateFriendly.setText(friendlyDateText);
@@ -152,25 +175,14 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
         viewHolder.humidity.setText(
                 getActivity()
-                        .getString(R.string.format_humidity,data.getDouble(COL_HUMIDITY)));
+                        .getString(R.string.format_humidity, data.getDouble(COL_HUMIDITY)));
 
         viewHolder.wind.setText(
-                Utility.getFormattedWind(getActivity(), data.getFloat(COL_WIND), data.getFloat(COL_DEGREES)) );
-
-
-
-        /*if (viewHolder.agulha!=null) {
-            float degrees = data.getFloat(COL_DEGREES)+360;
-            viewHolder.compass.setDegrees(data.getFloat(COL_DEGREES)+360);
-            viewHolder.agulha.startAnimation(rotate(degrees));
-        }*/
-
-
-
+                Utility.getFormattedWind(getActivity(), data.getFloat(COL_WIND), data.getFloat(COL_DEGREES)));
 
         viewHolder.pressure.setText(
                 getActivity()
-                        .getString(R.string.format_pressure,data.getDouble(COL_PRESSURE)));
+                        .getString(R.string.format_pressure, data.getDouble(COL_PRESSURE)));
 
         mForecast = String.format(getActivity().getString(R.string.format_notification),
                 viewHolder.cityView.getText(),
@@ -178,12 +190,29 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
                 viewHolder.highTempView.getText(),
                 viewHolder.lowTempView.getText());
 
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        Toolbar toolbarView = (Toolbar) getView().findViewById(R.id.toolbar);
 
-        if (mShareActionProvider != null){
-            mShareActionProvider.setShareIntent(createShareForecastIntent());
+        // We need to start the enter transition after the data has loaded
+        if (activity instanceof DetailActivity) {
+            activity.supportStartPostponedEnterTransition();
+
+            if (null != toolbarView) {
+                activity.setSupportActionBar(toolbarView);
+
+                activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
+                activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            }
+        } else {
+            if (null != toolbarView) {
+                Menu menu = toolbarView.getMenu();
+                if (null != menu) menu.clear();
+                toolbarView.inflateMenu(R.menu.detailfragment);
+                finishCreatingMenu(toolbarView.getMenu());
+            }
+
+
         }
-
-
     }
     private RotateAnimation rotate(float degree) {
         final RotateAnimation rotateAnim = new RotateAnimation(0.0f, degree,
