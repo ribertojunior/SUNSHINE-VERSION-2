@@ -6,9 +6,10 @@
     tools:context="com.example.android.sunshine.app.ForecastFragment">
 
     <include layout="@layout/fragment_main_base"
-
         android:layout_height="match_parent"
         android:layout_width="match_parent"/>
+
+
 
 
 

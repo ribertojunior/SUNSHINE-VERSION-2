@@ -357,6 +357,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         ViewHolder(View view) {
             mListView = (ListView) view.findViewById(R.id.listview_forecast);
             mEmptyView = (TextView) view.findViewById(R.id.empty_view);
+
         }
     }
 }

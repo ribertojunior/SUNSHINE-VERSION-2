@@ -1,0 +1,33 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="com.example.android.sunshine.app.ForecastFragment">
+
+    <!--android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:theme="@style/Toolbar"
+        android:layout_alignParentTop="true"
+        android:elevation="@dimen/appbar_elevation"
+        >
+
+    </android.support.v7.widget.Toolbar-->
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:elevation="@dimen/appbar_elevation">
+
+        <include layout="@layout/fragment_main_base"
+            android:layout_height="match_parent"
+            android:layout_width="@dimen/landscape_forecast_view_width"
+            android:elevation="@dimen/appbar_elevation"
+
+            />
+    </LinearLayout>
+
+</RelativeLayout>
