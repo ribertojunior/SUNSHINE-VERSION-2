@@ -99,6 +99,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
                 break;
             case R.id.action_share:
 
+                break;
             default:
                 return true;
 
