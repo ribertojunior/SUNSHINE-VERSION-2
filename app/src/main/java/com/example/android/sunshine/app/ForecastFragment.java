@@ -1,11 +1,13 @@
 package com.example.android.sunshine.app;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,6 +20,7 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +31,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.AbsListView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -49,6 +53,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     private static final int OFFLINE = 54;
     private boolean mUseTodayLayout, mAutoSelectView;
     private int mChoiceMode;
+    private RecyclerView.OnScrollListener onScrollListener;
 
 
     private static final String[] FORECAST_COLUMNS = {
@@ -152,6 +157,29 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         viewHolder.mRecyclerView.setAdapter(mForecastAdapter);
         viewHolder.mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         viewHolder.mRecyclerView.setHasFixedSize(true);
+        final View parallaxView = rootView.findViewById(R.id.parallax_bar);
+        if (parallaxView != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                onScrollListener = new RecyclerView.OnScrollListener() {
+
+                    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+                    @Override
+                    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                        super.onScrolled(recyclerView, dx, dy);
+                        int max = parallaxView.getHeight();
+                        if (dy > 0)
+                            parallaxView.setTranslationY(Math.max(-max, parallaxView.getTranslationY() -dy/2));
+                        else
+                            parallaxView.setTranslationY(Math.min(0, parallaxView.getTranslationY() -dy/2));
+
+                    }
+                };
+                viewHolder.mRecyclerView.addOnScrollListener(onScrollListener);
+            }
+        }else {
+            Log.d(LOG_TAG, "onCreateView on Forecasta Fragment: parallaxView is null.");
+        }
+
 
 
 
@@ -188,6 +216,16 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
         super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+
+        if (onScrollListener != null && getView() != null) {
+            ViewHolder view = (ViewHolder) getView().getTag();
+            view.mRecyclerView.removeOnScrollListener(onScrollListener);
+        }
+        super.onDestroy();
     }
 
     @Override

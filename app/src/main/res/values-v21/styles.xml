@@ -6,4 +6,14 @@
         <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
     </style>
 
+    <!-- main activity toolbar style -->
+    <style name="Toolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:popupTheme">@style/Theme.AppCompat.Light</item>
+    </style>
+
+
+
 </resources>
