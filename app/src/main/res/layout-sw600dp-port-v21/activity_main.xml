@@ -11,7 +11,7 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         android:id="@+id/toolbar"
         android:layout_alignParentTop="true"
-        android:elevation="@dimen/appbar_elevation"/>
+        android:elevation="0dp"/>
 
     <ImageView
         android:id="@+id/sunshine_logo_imageview"
@@ -27,7 +27,7 @@
 
 
     <View
-        android:elevation="@dimen/appbar_elevation"
+        android:elevation="0dp"
         android:background="@color/colorPrimary"
         android:layout_below="@id/sunshine_logo_imageview"
         android:layout_width="match_parent"
