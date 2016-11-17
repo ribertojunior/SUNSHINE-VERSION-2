@@ -74,7 +74,8 @@
             app:layout_columnWeight="1"
             app:layout_gravity="fill"
             android:contentDescription="@string/access_item_icon"
-            tools:src="@drawable/art_clouds" />
+            tools:src="@drawable/art_clouds"
+            android:transitionName="@string/detail_icon_transition_name"/>
 
         <TextView
             android:id="@+id/detail_high_textview"

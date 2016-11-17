@@ -19,7 +19,8 @@
             app:theme="@style/Toolbar"
             android:id="@+id/toolbar"
             android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"/>
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
 
         <android.support.v4.widget.Space
             android:layout_width="@dimen/list_icon"
@@ -28,7 +29,8 @@
             android:layout_marginLeft="@dimen/detail_view_extra_padding"
             android:layout_marginStart="@dimen/detail_view_extra_padding"
             android:layout_below="@id/toolbar"
-            android:layout_alignParentLeft="true"/>
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
 
         <ImageView
             android:id="@+id/sunshine_logo_imageview"
@@ -42,6 +44,7 @@
             android:layout_marginLeft="@dimen/detail_view_extra_padding"
             android:layout_marginStart="@dimen/detail_view_extra_padding"
             android:layout_toRightOf="@id/sunshineLogoAlign"
+            android:layout_toEndOf="@+id/sunshineLogoAlign"
             android:contentDescription="@string/sunshine_logo" />
     </RelativeLayout>
 
@@ -76,7 +79,6 @@
         android:layout_alignParentRight="true"
         android:layout_marginTop="?attr/actionBarSize"
         android:layout_alignStart="@id/layout_center"
-        android:elevation="@dimen/appbar_elevation"
         android:layout_marginRight="@dimen/detail_card_space_margin"
         android:layout_marginEnd="@dimen/detail_card_space_margin"
         />
@@ -86,7 +88,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignLeft="@id/cardviewAligner"
+        android:layout_alignStart="@+id/cardviewAligner"
         android:layout_alignRight="@id/cardviewAligner"
+        android:layout_alignEnd="@id/cardviewAligner"
         android:layout_alignTop="@id/cardviewAligner"
         android:layout_alignBottom="@id/cardviewAligner"
         android:layout_marginBottom="@dimen/detail_container_bottom_margin"

@@ -46,7 +46,9 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     String mForecast;
     private static final int LOADER_ID = 15;
     Uri mUri;
+    private boolean mTransitionAnimation;
     static final String DETAIL_URI = "URI";
+    static final String DETAIL_TRANSITION_ANIMATION = "DTA";
 
     public DetailFragment() {
         setHasOptionsMenu(true);
@@ -58,6 +60,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         Bundle args = getArguments();
         if (args != null) {
             mUri = args.getParcelable(DetailFragment.DETAIL_URI);
+            mTransitionAnimation = args.getBoolean(DetailFragment.DETAIL_TRANSITION_ANIMATION, false);
         }
 
         return inflater.inflate(R.layout.main, container, false);
@@ -139,8 +142,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        //ArrayList<String> strings = new ArrayList<String>();
-        //strings.add(convertCursorRowToUXFormat(data));
+
         if (!data.moveToFirst()) {
             return;
         }
@@ -195,7 +197,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         Toolbar toolbarView = (Toolbar) getView().findViewById(R.id.toolbar);
 
         // We need to start the enter transition after the data has loaded
-        if (activity instanceof DetailActivity) {
+        if (mTransitionAnimation) {
             activity.supportStartPostponedEnterTransition();
 
             if (null != toolbarView) {
@@ -214,15 +216,6 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
 
         }
-    }
-    private RotateAnimation rotate(float degree) {
-        final RotateAnimation rotateAnim = new RotateAnimation(0.0f, degree,
-                RotateAnimation.RELATIVE_TO_SELF, 0.5f,
-                RotateAnimation.RELATIVE_TO_SELF, 0.5f);
-
-        rotateAnim.setDuration(1000);
-        rotateAnim.setFillAfter(true);
-        return rotateAnim;
     }
 
     @Override

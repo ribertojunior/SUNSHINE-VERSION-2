@@ -5,13 +5,17 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.util.Pair;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.android.sunshine.app.sync.SunshineSyncAdapter;
 import com.google.android.gms.common.ConnectionResult;
@@ -36,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
 
 
         mLocation = Utility.getPreferredLocation(this);
@@ -130,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
 
 
     @Override
-    public void onItemSelected(Uri dateUri) {
+    public void onItemSelected(Uri dateUri, ForecastAdapter.ForecastAdapterViewHolder vh) {
         if (mTwoPane) {
             Bundle args = new Bundle();
             args.putParcelable(DetailFragment.DETAIL_URI, dateUri);
@@ -140,8 +145,13 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
             ft.replace(R.id.weather_detail_container, detailFragment);
             ft.commit();
         } else {
-             Intent intent = new Intent(this, DetailActivity.class).setData(dateUri);
-             startActivity(intent);
+            Intent intent = new Intent(this, DetailActivity.class).setData(dateUri);
+
+            ActivityOptionsCompat optionsCompat =
+                ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                        new Pair<View, String>(vh.mIconView, getString(R.string.detail_icon_transition_name)));
+
+            ActivityCompat.startActivity(this, intent, optionsCompat.toBundle());
         }
 
 

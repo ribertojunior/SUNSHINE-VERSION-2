@@ -19,6 +19,8 @@
         <item name="android:textColorSecondary">@color/white</item>
         <item name="android:textColor">@color/white</item>
     </style>
+    <style name="AppTheme.Main" parent="AppTheme"/>
+    <style name="AppTheme.Detail" parent="AppTheme"/>
     <!-- Style for forecast listview -->
     <style name="ForecastListStyle">
         <!-- Here it's a stub.  In screens of sufficient width, this style includes modifications

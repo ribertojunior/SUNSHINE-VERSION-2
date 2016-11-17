@@ -14,6 +14,15 @@
         <item name="android:popupTheme">@style/Theme.AppCompat.Light</item>
     </style>
 
+    <style name="AppTheme.Main" parent="AppTheme">
+        <item name="android:windowContentTransitions">true</item>
+    </style>
+    <style name="AppTheme.Detail" parent="AppTheme">
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowEnterTransition">@transition/detail_enter_transition</item>
+        <item name="android:windowReturnTransition">@transition/detail_return_transition</item>
+    </style>
+
 
 
 </resources>
