@@ -96,6 +96,8 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
         Log.d(LOG_TAG, "onPerformSync Called.");
         String location = Utility.getPreferredLocation(getContext());
+        float locationLongitude = Utility.getLocationLongitude(getContext());
+        float locationLatitude = Utility.getLocationLatitude(getContext());
         if (location.equals(""))
             location = getContext().getString(R.string.pref_location_default);
         // These two need to be declared outside the try/catch
@@ -123,10 +125,17 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
             final String UNITS_PARAM = "units";
             final String DAYS_PARAM = "cnt";
             final String APIID_PARAM = "APPID";
+            final String LAT_PARAM = "lat";
+            final String LON_PARAM = "lon";
+            Uri.Builder builder = Uri.parse(FORECAST_BASE_URL).buildUpon();
 
-            Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
-                    .appendQueryParameter(QUERY_PARAM, location)
-                    .appendQueryParameter(FORMAT_PARAM, format)
+            if (Utility.isLocationLatLonAvaiable(getContext())) {
+                builder.appendQueryParameter(LAT_PARAM, ""+locationLatitude)
+                        .appendQueryParameter(LON_PARAM, ""+locationLongitude);
+            } else {
+                builder.appendQueryParameter(QUERY_PARAM, location);
+            }
+            Uri builtUri = builder.appendQueryParameter(FORMAT_PARAM, format)
                     .appendQueryParameter(UNITS_PARAM, units)
                     .appendQueryParameter(DAYS_PARAM, Integer.toString(numDays))
                     .appendQueryParameter(APIID_PARAM, BuildConfig.OPEN_WEATHER_MAP_API_KEY)
@@ -134,7 +143,7 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
 
             URL url = new URL(builtUri.toString());
 
-            // Create the request to OpenWeatherMap, and open the connection
+            // Create the request to OpenWeatherMap, and open the connectbion
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();

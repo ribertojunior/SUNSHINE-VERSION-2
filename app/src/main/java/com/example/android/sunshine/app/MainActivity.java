@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
             if (!sentToken) {
                 String token = FirebaseInstanceId.getInstance().getToken();
                 sharedPreferences.edit().putBoolean(SENT_TOKEN_TO_SERVER, true).apply();
-                Log.v(LOG_TAG, "onCreate: token: "+token);
+                //Log.v(LOG_TAG, "onCreate: token: "+token);
 
             }
         }

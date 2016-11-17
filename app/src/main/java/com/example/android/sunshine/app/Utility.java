@@ -45,6 +45,8 @@ public class Utility {
     // back into date objects for comparison/processing.
     private static final String DATE_FORMAT = "yyyyMMdd";
 
+    private static float DEFAULT_LATLONG = 0F;
+
     public static String getPreferredIcon(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getString(context.getString(R.string.pref_icon_key),
@@ -393,5 +395,23 @@ public class Utility {
             e.printStackTrace();
         }
         return largeIcon;
+    }
+
+    public static boolean isLocationLatLonAvaiable(Context context) {
+        SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.contains(context.getString(R.string.pref_location_latitude))
+                && sharedPreferences.contains(context.getString(R.string.pref_location_longitude));
+    }
+
+    public static float getLocationLatitude(Context context) {
+        SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getFloat(context.getString(R.string.pref_location_latitude), DEFAULT_LATLONG);
+    }
+    public static float getLocationLongitude(Context context) {
+        SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getFloat(context.getString(R.string.pref_location_longitude), DEFAULT_LATLONG);
     }
 }

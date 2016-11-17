@@ -25,6 +25,9 @@
     <!-- Default ID for location preferences (São José dos Campos) [CHAR_LIMIT=NONE] -->
     <string name="pref_location_default" translatable="false">12240-000</string>
 
+    <string name="pref_location_latitude" translatable="false">loc-lat</string>
+    <string name="pref_location_longitude" translatable="false">loc-long</string>
+
     <!-- Label for the unit preference [CHAR_LIMIT=30]-->
     <string name="pref_units_label">Temperature Units</string>
 
@@ -123,6 +126,8 @@
     <string name="pref_notification_on">Enable</string>
     <string name="pref_notification_off">Disable</string>
 
+
+
     <!-- Sever and network error strings -->
     <string name="empty_string">No Weather Information Available</string>
     <string name="network_error">No Weather Information Available. No Internet Connectivity</string>
@@ -205,6 +210,9 @@
     <string name="condition_unknown">Unknown (<xliff:g id="low">%1$s</xliff:g>)</string>
 
     <string name="detail_icon_transition_name" translatable="false">detail_icon_transition</string>
+    <string name="pref_current_location_desc">Use my location.</string>
 
+    <!-- For Google Places API Attributions -->
+    <string name="attribution_text">Powered by Google</string>
 
 </resources>
