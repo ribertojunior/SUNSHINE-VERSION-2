@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="@dimen/widget_margin"
+    >
+    <LinearLayout
+        android:id="@+id/widget"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimary">
+        <android.support.v4.widget.Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="fill_horizontal"
+            android:layout_weight="1"/>
+        <ImageView
+            android:id="@+id/widget_icon"
+            android:layout_width="@dimen/list_icon"
+            android:layout_height="@dimen/list_icon"
+            android:adjustViewBounds="true"
+            android:layout_gravity="start"
+            android:contentDescription="@string/weather_condition_illustration"
+            tools:src="@drawable/art_clear"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="2">
+            <TextView
+                android:id="@+id/widget_city_name_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                tools:text="São José dos Campos"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/white" />
+            <TextView
+                android:id="@+id/widget_desc_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                tools:text="Clear"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/temp_parent"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/widget_high_temperature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="24°"
+                android:textColor="@color/white"
+                android:textAppearance="?android:textAppearanceLarge"
+                android:layout_gravity="center_horizontal" />
+            <TextView
+                android:id="@+id/widget_low_temperature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="9°"
+                android:textColor="@color/white"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:layout_gravity="center_horizontal" />
+        </LinearLayout>
+        <android.support.v4.widget.Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="fill_horizontal"
+            android:layout_weight="1"/>
+
+
+    </LinearLayout>
+
+</FrameLayout>

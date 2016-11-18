@@ -77,6 +77,10 @@ public class Utility {
         return context.getString(R.string.format_temperature, temp);
     }
 
+    public static String formatTemperature(Context context, double temperature) {
+        return context.getString(R.string.format_temperature, temperature);
+    }
+
     static String formatDate(long dateInMillis) {
         Date date = new Date(dateInMillis);
         return DateFormat.getDateInstance().format(date);

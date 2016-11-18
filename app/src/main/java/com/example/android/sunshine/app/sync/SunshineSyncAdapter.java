@@ -59,6 +59,8 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
     // 60 seconds (1 minute) * 180 = 3 hours
     public static final int SYNC_INTERVAL = 60*180;
     public static final int SYNC_FLEXTIME = SYNC_INTERVAL/3;
+    public static final String ACTION_DATA_UPDATE =
+            "com.example.android.sunshine.app.ACTION_DATA_UPDATE";
     private static final String[] NOTIFY_WEATHER_PROJECTION = new String[] {
             WeatherContract.WeatherEntry.COLUMN_WEATHER_ID,
             WeatherContract.WeatherEntry.COLUMN_MAX_TEMP,
@@ -172,6 +174,7 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
             }
             forecastJsonStr = buffer.toString();
             insertWeatherDataFromJson(forecastJsonStr, location);
+
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error ", e);
             setLocationStatus(getContext(),LOCATION_STATUS_SERVER_DOWN);
@@ -191,6 +194,11 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
                 }
             }
         }
+    }
+
+    private void updateWidgets() {
+        Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATE).setPackage(getContext().getPackageName());
+        getContext().sendBroadcast(dataUpdatedIntent);
     }
 
     /**
@@ -349,6 +357,7 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
             }
             //Log.d(LOG_TAG, "FetchWeatherTask Complete. " + inserted + " Inserted");
             deleteOld(locationSetting);
+            updateWidgets();
             notifyWeather();
             setLocationStatus(getContext(), LOCATION_STATUS_OK);
 

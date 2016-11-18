@@ -214,5 +214,6 @@
 
     <!-- For Google Places API Attributions -->
     <string name="attribution_text">Powered by Google</string>
+    <string name="title_widget_today">Sunshine Today</string>
 
 </resources>
