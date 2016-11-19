@@ -1,4 +1,4 @@
-package com.example.android.sunshine.app;
+package com.example.android.sunshine.app.widget;
 
 import android.annotation.TargetApi;
 import android.app.IntentService;
@@ -10,11 +10,13 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.format.Time;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 
+import com.example.android.sunshine.app.MainActivity;
+import com.example.android.sunshine.app.R;
+import com.example.android.sunshine.app.Utility;
 import com.example.android.sunshine.app.data.WeatherContract;
 
 public class TodayWidgetIntentService extends IntentService {
@@ -74,7 +76,6 @@ public class TodayWidgetIntentService extends IntentService {
 
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
-
                     setRemoteContentDescription(views, description);
                 }
                 views.setTextViewText(R.id.widget_high_temperature, formattedMaxTemperature);

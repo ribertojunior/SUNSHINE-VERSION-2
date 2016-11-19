@@ -45,7 +45,7 @@
             android:exported="false"
             android:syncable="true"/>
 
-        <receiver android:name=".SunshineWidgetProvider"
+        <receiver android:name=".widget.SunshineWidgetProvider"
             android:label="@string/title_widget_today">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
@@ -54,7 +54,7 @@
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/widget_info_today"/>
         </receiver>
-        <service android:name=".TodayWidgetIntentService"/>
+        <service android:name=".widget.TodayWidgetIntentService"/>
 
         <activity
             android:name=".MainActivity"
