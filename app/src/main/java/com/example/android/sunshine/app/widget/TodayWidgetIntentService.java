@@ -41,7 +41,7 @@ public class TodayWidgetIntentService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this,
-                SunshineWidgetProvider.class));
+                TodayWidgetProvider.class));
 
         Uri uri = WeatherContract.WeatherEntry
                 .buildWeatherLocationWithDate(Utility.getPreferredLocation(this), System.currentTimeMillis());

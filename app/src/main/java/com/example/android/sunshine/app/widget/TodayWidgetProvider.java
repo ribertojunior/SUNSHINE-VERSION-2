@@ -9,11 +9,15 @@ import android.os.Bundle;
 import com.example.android.sunshine.app.sync.SunshineSyncAdapter;
 
 
-public class SunshineWidgetProvider extends AppWidgetProvider {
+public class TodayWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         context.startService(new Intent(context, TodayWidgetIntentService.class));
+
+
+
+
     }
 
     @Override

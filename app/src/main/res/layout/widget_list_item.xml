@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/detail_view_extra_padding"
+        android:paddingRight="@dimen/detail_view_extra_padding"
+        android:background="@color/colorPrimaryLight">
+
+        <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content">
+
+            <ImageView
+                android:layout_width="@dimen/list_icon"
+                android:layout_height="@dimen/list_icon"
+                android:contentDescription="@string/weather_condition_illustration"
+                android:id="@+id/detail_icon"
+                android:adjustViewBounds="true"
+                android:layout_gravity="center"
+                tools:src="@drawable/art_clear"
+                android:layout_marginEnd="@dimen/forecast_temperature_space"
+                android:layout_marginRight="@dimen/forecast_temperature_space" />
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/widget_desc_parent"
+                android:layout_toRightOf="@id/detail_icon"
+                android:layout_toEndOf="@id/detail_icon"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/detail_date_textview"
+                    tools:text="Tomorrow"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/detail_forecast_textview"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="@color/white"
+                    tools:text="Clear" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="@dimen/forecast_temperature_space"
+                android:layout_marginRight="@dimen/forecast_temperature_space"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/widget_high_temperature"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="sans-serif"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    android:textColor="@color/white"
+                    tools:text="48°"
+                    tools:ignore="UnusedAttribute" />
+
+                <TextView
+                    android:id="@+id/widget_low_temperature"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="sans-serif"
+                    android:textAppearance="?android:textAppearanceSmall"
+                    android:textColor="@color/white"
+                    tools:text="28°"
+                    tools:ignore="UnusedAttribute" />
+            </LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+</FrameLayout>

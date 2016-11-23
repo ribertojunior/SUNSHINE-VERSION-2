@@ -69,9 +69,7 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
     @Override
     public void onBindViewHolder(ForecastAdapterViewHolder forecastAdapterViewHolder, int position) {
         mCursor.moveToPosition(position);
-
         int weatherId = mCursor.getInt(COL_WEATHER_CONDITION_ID);
-
         int defaultImage;
         switch (getItemViewType(position)) {
             case VIEW_TYPE_TODAY:
