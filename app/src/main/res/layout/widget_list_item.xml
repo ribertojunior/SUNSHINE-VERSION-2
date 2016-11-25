@@ -21,7 +21,7 @@
                 android:layout_width="@dimen/list_icon"
                 android:layout_height="@dimen/list_icon"
                 android:contentDescription="@string/weather_condition_illustration"
-                android:id="@+id/detail_icon"
+                android:id="@+id/widget_icon"
                 android:adjustViewBounds="true"
                 android:layout_gravity="center"
                 tools:src="@drawable/art_clear"
@@ -41,7 +41,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/detail_date_textview"
+                    android:id="@+id/widget_detail_date_textview"
                     tools:text="Tomorrow"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                     android:textColor="@color/white" />
@@ -49,7 +49,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/detail_forecast_textview"
+                    android:id="@+id/widget_detail_forecast_textview"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/white"
                     tools:text="Clear" />

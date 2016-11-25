@@ -5,11 +5,12 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_current_location"
+        android:src="@drawable/ic_current_location"
         android:contentDescription="@string/pref_current_location_desc"
         android:layout_gravity="end|center_vertical"
-        android:tint="@color/material_deep_teal_500"
-        android:tintMode="add"
+
 
         />
+    <!--android:tint="@color/material_deep_teal_500"
+        android:tintMode="add"-->
 </FrameLayout>
