@@ -34,6 +34,7 @@ import com.example.android.sunshine.app.R;
 import com.example.android.sunshine.app.Utility;
 import com.example.android.sunshine.app.data.WeatherContract;
 import com.example.android.sunshine.app.data.WeatherContract.WeatherEntry;
+import com.example.android.sunshine.app.muzei.WeatherMuzeiSource;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -359,6 +360,7 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
             deleteOld(locationSetting);
             updateWidgets();
             notifyWeather();
+            updateMuzei();
             setLocationStatus(getContext(), LOCATION_STATUS_OK);
 
         } catch (JSONException e) {
@@ -368,6 +370,14 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
     }
+
+    private void updateMuzei() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            getContext().startService(new Intent(ACTION_DATA_UPDATE)
+                    .setClass(getContext(), WeatherMuzeiSource.class));
+        }
+    }
+
     /**
      * Helper method to handle insertion of a new location in the weather database.
      *
