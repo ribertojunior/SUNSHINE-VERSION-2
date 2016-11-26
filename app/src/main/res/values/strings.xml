@@ -23,7 +23,7 @@
     <string name="pref_location_name" translatable="false">location_name</string>
 
     <!-- Default ID for location preferences (São José dos Campos) [CHAR_LIMIT=NONE] -->
-    <string name="pref_location_default" translatable="false">12240-000</string>
+    <string name="pref_location_default" translatable="false">São José dos Campos</string>
 
     <string name="pref_location_latitude" translatable="false">loc-lat</string>
     <string name="pref_location_longitude" translatable="false">loc-long</string>

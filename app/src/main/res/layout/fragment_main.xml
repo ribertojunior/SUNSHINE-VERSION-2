@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.android.sunshine.app.ForecastFragment">
     <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/widget"
+        android:id="@+id/coord"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

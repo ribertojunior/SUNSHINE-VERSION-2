@@ -113,12 +113,7 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
             case R.id.action_settings :
                 Intent intent = new Intent(this,SettingsActivity.class);
                 startActivity(intent);
-                break;
-            case R.id.action_map:
-
-                break;
-            default: return true;
-
+                return true;
         }
 
 

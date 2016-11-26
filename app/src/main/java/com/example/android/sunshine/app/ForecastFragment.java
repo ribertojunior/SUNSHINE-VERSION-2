@@ -101,14 +101,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     public ForecastFragment() {
     }
 
-    private void updateWeather(){
-        SunshineSyncAdapter.syncImmediately(getActivity());
-        /*ContentResolver.addPeriodicSync(
-                SunshineSyncAdapter.getSyncAccount(getActivity()),
-                getString(R.string.content_authority),
-                Bundle.EMPTY, 3600L);
-*/
-    }
+
 
     public void onLocationChanged() {
         //updateWeather();
@@ -181,7 +174,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
 
 
         //viewHolder.mRecyclerView.setItemChecked(0, true);
-        //SunshineSyncAdapter.syncImmediately(getActivity());
+        SunshineSyncAdapter.syncImmediately(getActivity());
         if (savedInstanceState != null ) {
             mForecastAdapter.onRestoreInstanceState(savedInstanceState);
         }
