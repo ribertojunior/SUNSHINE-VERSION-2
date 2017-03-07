@@ -30,7 +30,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.AbsListView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.android.sunshine.app.data.WeatherContract;
@@ -174,7 +173,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
 
 
         //viewHolder.mRecyclerView.setItemChecked(0, true);
-        SunshineSyncAdapter.syncImmediately(getActivity());
+        //SunshineSyncAdapter.syncImmediately(getActivity());
         if (savedInstanceState != null ) {
             mForecastAdapter.onRestoreInstanceState(savedInstanceState);
         }
